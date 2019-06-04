@@ -1,0 +1,1 @@
+I_diff = 2e-4;  % Magnitude of charging current reduction per simulation step of fast-charging control
