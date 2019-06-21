@@ -4,4 +4,4 @@ dummy_field = cell(1);
 
 configs = preallocate_configs_1_mod_all;
 configs.ModInfo = [];
-configs.Tests = [];
+configs.Tests_mod = [];

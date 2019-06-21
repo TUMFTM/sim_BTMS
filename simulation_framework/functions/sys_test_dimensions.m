@@ -1,4 +1,4 @@
-function [config, passed] = mod_test_dimensions_no_BTMS(config)
+function [config, passed] = sys_test_dimensions(config)
 
 % This function tests the dimension of the module and compares it to the
 % specifications made in 'system_specifications'
@@ -52,7 +52,7 @@ if strcmp(config.BatPara.cell_type, 'Cyl')
     length_mod = length_cell * s * sf_mod_dim;       
     width_mod = diameter_cell * pe * sf_mod_dim;
     height_mod = diameter_cell * e * sf_mod_dim;
-        
+    
 else
     length_mod = thickness_cell * s * sf_mod_dim;
     width_mod = width_cell * pe * sf_mod_dim;

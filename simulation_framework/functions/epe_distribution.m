@@ -1,11 +1,11 @@
 function [epe] = epe_distribution(p_in, num_higher_p)
 
-% This function determine the e*pe connection for a number of p cells
+% This function determine the e*pe connection for a number of p cells/modules
 % connected in parallel. The connection is chosen in such a way that the
-% cells form a uniform rectangle with no gaps.
+% cells/modules form a uniform rectangle with no gaps.
 
 % Example for p=6:
-% e*pe = 1*6 or 2*3 (auch Symmetrie?)
+% e*pe = 1*6 or 2*3
 
 % Check if p is a prime number. If so no suitable distributions will be
 % found. In this case also consider p+1. We don't iterate higher here

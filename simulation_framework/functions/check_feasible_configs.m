@@ -5,6 +5,7 @@ num_of_configs = size(configs, 2);
 try
    isempty(configs.BatPara);
    warning('No feasible concepts in %s!', inputname(1))
+   
 catch
-   fprintf('There are %i feasible concepts in %s.\n', num_of_configs ,inputname(1))
+   fprintf('There are %i concepts in %s.\n', num_of_configs ,inputname(1))
 end

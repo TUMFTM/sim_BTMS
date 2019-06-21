@@ -1,3 +1,12 @@
+%% Disclaimer
+
+% This data is for testing and debugging purposes only!
+% The data is mainly used to test the model so it may have been randomly changed 
+% meaning it has nothing to do with reality. 
+
+% Use at your own risk!
+
+
 %% Info
 
 % Specify details of physical BTMS configuration on the cell level.

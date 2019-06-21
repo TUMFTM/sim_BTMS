@@ -26,7 +26,7 @@ BatPara.cell_type = 'Pouch';    % Select either 'Pouch', 'Pris' or 'Cyl'
 
 run cell_parameters_NCR18650PF
 
-BatPara.electrical.C_A = 10;           % Overwrite original CA value. We want to have a Pouch-Cell with 10 Ah capacity
+BatPara.electrical.C_A = 20;           % Overwrite original CA value. We want to have a Pouch-Cell with 10 Ah capacity
 
 BatPara.electrical.U_max = 4.2;        % Maximum cell voltage in V IN THE LATER USE-CASE
 BatPara.electrical.U_min = 4.2;        % Minimum cell voltage in V IN THE LATER USE-CASE
@@ -40,7 +40,7 @@ BatPara.electrical.I_max = 10;         % Maximum cell current in A
 % compared to https://github.com/TUMFTM/sim_battery_system, we don't use
 % the thermal parameters and the format of this model, but our own.
 
-BatPara.physical.A_K = [0.006,0.082,0.170];                                 % Height (x), Width (y) and Length (z) (in m)
+BatPara.physical.A_K = [0.006,0.16,0.170];                                 % Height (x), Width (y) and Length (z) (in m)
         
 BatPara.physical.rho = 2453;                                                % Density [kg/m^3]
 BatPara.physical.m = BatPara.physical.rho*prod(BatPara.physical.A_K);       % Mass [kg] (here it's calculated from the cell's dimension and density)
