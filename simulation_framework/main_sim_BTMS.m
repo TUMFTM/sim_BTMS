@@ -36,7 +36,7 @@ SimPara.t_sim  = 2500;                          % Total simulation time in s
 
 % Every row corresponds to a variant that gets considered for the battery
 % system configuration. The input data should be saved in
-% 'input_and_parameters/cell_data', '/BTMS_configs' and 'system_data', respectively.
+% 'input_and_parameters/01_cell_data', '/02_BTMS_configs' and '/03_system_data', respectively.
 
 input_configs = {
     'Pouch_10Ah_air', 'system_parameters', 'liquid_Pouch'; ...
