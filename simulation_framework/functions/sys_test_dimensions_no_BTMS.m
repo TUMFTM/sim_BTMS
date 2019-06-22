@@ -19,10 +19,10 @@ dim_z_mod = config.ModInfo.dim_z_mod;
 
 % interconnection data
 
-tot = config.PackInfo.num_mods_sys;                     % Total number of modules
-s   = config.PackInfo.num_serial_mods_sys;              % Total number of serial modules
-pe  = config.PackInfo.num_layers_sys;                   % Total number of parallel cells on one level
-e   = config.PackInfo.num_parallel_mods_per_layer_sys;  % Total number of levels
+tot = config.SysInfo.num_mods_sys;                     % Total number of modules
+s   = config.SysInfo.num_serial_mods_sys;              % Total number of serial modules
+pe  = config.SysInfo.num_layers_sys;                   % Total number of parallel cells on one level
+e   = config.SysInfo.num_parallel_mods_per_layer_sys;  % Total number of levels
 
 
 % Correction and safety factors
@@ -67,7 +67,7 @@ end
 
 %% Write system info
 
-config.PackInfo.mass_sys = mass_sys;
-config.PackInfo.dim_x_sys = dim_x_sys;
-config.PackInfo.dim_y_sys = dim_y_sys;
-config.PackInfo.dim_z_sys = dim_z_sys;
+config.SysInfo.mass_sys = mass_sys;
+config.SysInfo.dim_x_sys = dim_x_sys;
+config.SysInfo.dim_y_sys = dim_y_sys;
+config.SysInfo.dim_z_sys = dim_z_sys;

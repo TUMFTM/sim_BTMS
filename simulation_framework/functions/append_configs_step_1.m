@@ -1,4 +1,4 @@
-function configs = append_configs_step_1(BatPara, BTMS, SimPara, SysPara, SysSpec, configs)
+function configs = append_configs_step_1(BatPara, BTMSPara, SysPara, SysSpec, configs)
 
 % Check if first run in this simulation. If first run write at first array
 % position, otherwise append data to already existing data.
@@ -13,7 +13,6 @@ else
 end
 
  configs(index).BatPara = BatPara;
- configs(index).BTMS = BTMS;
- configs(index).SimPara = SimPara;
+ configs(index).BTMSPara = BTMSPara;
  configs(index).SysPara = SysPara;
  configs(index).SysSpec = SysSpec;

@@ -9,9 +9,9 @@
 
 %% Cell type
 
-% Specify name of parameter set. Format: 'CELL-TYPE'_'CAPACITY'Ah_'COOLING-TYPE'
+BatPara.name = mfilename;       % Get cell name from filename (for better overview)
 
-BatPara.cell_type = 'Cyl';    % Select either 'Pouch', 'Pris' or 'Cyl'
+BatPara.cell_type = 'Cyl';      % Select either 'Pouch', 'Pris' or 'Cyl'
 
 
 %% Electrical parameters (edit here)

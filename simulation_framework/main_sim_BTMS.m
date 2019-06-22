@@ -16,12 +16,6 @@ addpath(genpath('input_and_parameters'));       % Input data for the system conf
 
 
 
-%% User Input: Overall simulation parameters
-
-SimPara.t_step = 0.01;                          % Simulation step-size in s. Obviously this has a huge impact on simulation time, but note the simulation may get unstable if set too high.
-SimPara.t_sim  = 2500;                          % Total simulation time in s
-
-
 %% User Input: Cells and BTMS-method combinations in cosideration
 
 % Specify LIB parameters and corresponding BTMS method in the following format:
@@ -140,7 +134,7 @@ for ii = 1:size(input_configs, 1)
             SysPara.pe = epe(jj).pe(kk);
             SysPara.e = epe(jj).e(kk);
           
-            configs_1_mod_all = append_configs_step_1(BatPara, BTMS, SimPara, SysPara, SysSpec, configs_1_mod_all); % Save everything in a cell-array 
+            configs_1_mod_all = append_configs_step_1(BatPara, BTMSPara, SysPara, SysSpec, configs_1_mod_all); % Save everything in a cell-array 
         end
     end
 end 
@@ -279,11 +273,11 @@ for ii = 1:size(configs_2_mod_passed, 2)
         
         for kk = 1:1:size(epe_sys(jj).pe, 2)
             
-            config.PackInfo.num_mods_sys = s_sys * p_sys;
-            config.PackInfo.num_serial_mods_sys = s_sys;
-            config.PackInfo.num_parallel_mods_sys = p_sys;
-            config.PackInfo.num_layers_sys = epe_sys(jj).e(kk);
-            config.PackInfo.num_parallel_mods_per_layer_sys = epe_sys(jj).pe(kk);
+            config.SysInfo.num_mods_sys = s_sys * p_sys;
+            config.SysInfo.num_serial_mods_sys = s_sys;
+            config.SysInfo.num_parallel_mods_sys = p_sys;
+            config.SysInfo.num_layers_sys = epe_sys(jj).e(kk);
+            config.SysInfo.num_parallel_mods_per_layer_sys = epe_sys(jj).pe(kk);
 
           
             configs_3_sys_all = append_configs(configs_3_sys_all, config); % Save everything in a cell-array 

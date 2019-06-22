@@ -1,5 +1,7 @@
 %% Thermal system parameters
 
+SysPara.name = mfilename;  % Get config name from filename (for better overview)
+
 
 %% Electrical Interconnection
 
@@ -46,13 +48,41 @@ SysPara.Balancing.t_Start = 0;                                             % Spe
 % If disabled: T_cell remains constant with the values specified in 'Initial State'.
 % Hint: Enable all thermal system variables with dummy values to avoid errors.
 
-SysPara.thermal.thermal_sim_enable = false; 
+SysPara.thermal.convection_enable = false; 
 
 % Simple thermal model. Assume constant ambient temperature around each
 % cell and constant heat transfer coefficient. Again, one value must be
 % specified for each cell. Dynamic inputs can be specified in the
 % simulation model.
 
-SysPara.thermal.T_cell_ambient = ones(SysPara.p,SysPara.s) * 25;   %Ambient temperature around each cell in °C
+SysPara.thermal.convection_T_ambient = ones(SysPara.p,SysPara.s) * 25;   % Ambient temperature around each cell in °C
 
-SysPara.thermal.alpha_cell_ambient = ones(SysPara.p,SysPara.s) * 10;   % Heat transfer coefficient between cells and environment in W/(m^2*K)
+SysPara.thermal.convection_alpha = ones(SysPara.p,SysPara.s) * 10;       % Heat transfer coefficient between cells and environment in W/(m^2*K)
+
+
+
+%% Heat Conduction between the cells (in x-, y- and z-direction)
+
+% Heat conduction between cells. This will be hard to determine and the
+% distances are also influenced by the later dimensioning of the battery
+% system and the BTMS. To make it somewhat controllable fixed distances are
+% assumed
+
+SysPara.thermal.conduction_x_enable = true;         % Enable heat conduction in x-direction
+
+SysPara.thermal.conduction_x_lambda = 5;            % Thermal conductivity between cells in the x-direction [W/m*K]
+SysPara.thermal.conduction_x_wt     = 0.00015;      % distance between cells in the x-direction [m]
+
+
+SysPara.thermal.conduction_y_enable = true;         % Enable heat conduction in y-direction
+
+SysPara.thermal.conduction_y_enable = 5;            % Thermal conductivity between cells in the y-direction [W/m*K]
+SysPara.thermal.conduction_y_enable     = 0.00015;  % distance between cells in the y-direction [m]
+
+
+SysPara.thermal.conduction_z_enable = true;         % Enable heat conduction in z-direction
+
+SysPara.thermal.conduction_z_lambda = 5;            % Thermal conductivity between cells in the z-direction [W/m*K]
+SysPara.thermal.conduction_z_wt     = 0.00015;      % distance between cells in the z-direction [m]
+
+

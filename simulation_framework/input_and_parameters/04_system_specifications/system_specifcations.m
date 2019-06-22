@@ -13,6 +13,9 @@
 
 %% Some basic definitions
 
+SysSpec.name = mfilename;         % Get config name from filename (for better overview)
+
+
 SysSpec.num_higher_p_mod = 2;     % Not only look for one parallel cell connection for each module, but also consider up t0 p+n --> More e*pe-distributions will be found.
 SysSpec.num_higher_p_sys = 1;     % Not only look for one parallel module connection for each system, but also consider up t0 p+n --> More e*pe-distributions will be found. Note that this will potentially massivey overdimension your system!
 

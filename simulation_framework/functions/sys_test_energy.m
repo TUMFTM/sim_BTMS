@@ -19,8 +19,8 @@ U_max_mod = config.ModInfo.U_max_mod;   % Maximum module voltage in Ah
 
 % Electrical pack connection data
 
-p = config.PackInfo.num_parallel_mods_sys;  % Total number of parallel modules
-s = config.PackInfo.num_mods_sys;           % Total number of serial modules
+p = config.SysInfo.num_parallel_mods_sys;  % Total number of parallel modules
+s = config.SysInfo.num_mods_sys;           % Total number of serial modules
 
 
 
@@ -47,8 +47,8 @@ end
 
 %% Write system info
 
-config.PackInfo.C_sys = C_sys;
-config.PackInfo.E_sys = E_sys;
-config.PackInfo.U_nom_sys = U_nom_sys;
-config.PackInfo.U_min_sys = U_min_sys;
-config.PackInfo.U_max_sys = U_max_sys;
+config.SysInfo.C_sys = C_sys;
+config.SysInfo.E_sys = E_sys;
+config.SysInfo.U_nom_sys = U_nom_sys;
+config.SysInfo.U_min_sys = U_min_sys;
+config.SysInfo.U_max_sys = U_max_sys;

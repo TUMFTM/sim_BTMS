@@ -9,7 +9,7 @@
 
 %% Cell type
 
-% Specify name of parameter set. Format: 'CELL-TYPE'_'CAPACITY'Ah_'COOLING-TYPE'
+BatPara.name = mfilename;  % Get cell name from filename (for better overview)
 
 BatPara.cell_type = 'Pouch';    % Select either 'Pouch', 'Pris' or 'Cyl'
 
@@ -50,7 +50,7 @@ BatPara.physical.lambda = [0.84, 26.05, 26.05];   % Thermal conductivity in x-,y
 
 BatPara.physical.dim_x = 0.082;     % Cell dimension in x-direction
 BatPara.physical.dim_y = 0.009;     % Cell dimension in y-direction
-BatPara.physical.dim_z = 0.170;     % Cell dimension in z-direction
+BatPara.physical.dim_z = 0.100;     % Cell dimension in z-direction
 
 % Cell mass (Calculated from the cell's dimensions and density)
 
