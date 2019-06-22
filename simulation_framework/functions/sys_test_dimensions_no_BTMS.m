@@ -9,10 +9,12 @@ function [config, passed] = sys_test_dimensions_no_BTMS(config)
 
 % Module data
 
-length_mod = config.ModInfo.length_mod;
-width_mod = config.ModInfo.width_mod;
-height_mod = config.ModInfo.height_mod;
 mass_mod = config.ModInfo.mass_mod;
+
+dim_x_mod = config.ModInfo.dim_x_mod;
+dim_y_mod = config.ModInfo.dim_y_mod;
+dim_z_mod = config.ModInfo.dim_z_mod;
+
 
 
 % interconnection data
@@ -36,29 +38,29 @@ sf_mass_sys = 1 + config.SysSpec.sf_mass_sys;    % Safety factor for module mass
 
 mass_sys = mass_mod * tot * sf_mass_sys;
 
-length_sys = length_mod * s * sf_dim_sys;       
-width_sys = width_mod * pe * sf_dim_sys;
-height_sys = height_mod * e * sf_dim_sys;
+dim_x_sys = dim_x_mod * s * sf_dim_sys;       
+dim_y_sys = dim_y_mod * pe * sf_dim_sys;
+dim_z_sys = dim_z_mod * e * sf_dim_sys;
 
 
 %% Test system against criteria
 
-passed = struct('mass_sys',false, 'length_sys',false, 'width_sys',false, 'height_sys',false);
+passed = struct('mass_sys',false, 'dim_x_sys',false, 'dim_y_sys',false, 'dim_z_sys',false);
 
 if mass_sys <= config.SysSpec.m_sys_max
     passed.mass_sys = true;
 end
 
-if length_sys <= config.SysSpec.l_sys_max
-    passed.length_sys = true;
+if dim_x_sys <= config.SysSpec.dim_x_sys_max
+    passed.dim_x_sys = true;
 end
 
-if width_sys <= config.SysSpec.w_sys_max
-    passed.width_sys = true;
+if dim_y_sys <= config.SysSpec.dim_y_sys_max
+    passed.dim_y_sys = true;
 end
 
-if height_sys <= config.SysSpec.h_sys_max
-    passed.height_sys = true;
+if dim_z_sys <= config.SysSpec.dim_z_sys_max
+    passed.dim_z_sys = true;
 end
 
 
@@ -66,6 +68,6 @@ end
 %% Write system info
 
 config.PackInfo.mass_sys = mass_sys;
-config.PackInfo.length_sys = length_sys;
-config.PackInfo.width_sys = width_sys;
-config.PackInfo.height_sys = height_sys;
+config.PackInfo.dim_x_sys = dim_x_sys;
+config.PackInfo.dim_y_sys = dim_y_sys;
+config.PackInfo.dim_z_sys = dim_z_sys;

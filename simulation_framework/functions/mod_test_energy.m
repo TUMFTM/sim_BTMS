@@ -15,6 +15,8 @@ U_nom_cell = config.BatPara.electrical.U_nom;   % Nominal cell voltage in Ah
 U_min_cell = config.BatPara.electrical.U_min;   % Minimum cell voltage in Ah
 U_max_cell = config.BatPara.electrical.U_max;   % Maximum cell voltage in Ah
 
+I_max_cell = config.BatPara.electrical.I_max;   % Maximum cell current in A
+
 % Electrical connection data
 
 p =  config.SysPara.p;  % Total number of parallel cells
@@ -31,6 +33,8 @@ E_mod = C_mod * U_nom_mod * 1e-3;   % Module energy in kWh
 
 U_min_mod = U_min_cell * s;         % Minimum module voltage in V
 U_max_mod = U_max_cell * s;         % Maximum module voltage in V
+    
+I_max_mod = I_max_cell * p;         % Maximum module current in A
 
 
 
@@ -50,6 +54,7 @@ config.ModInfo.E_mod = E_mod;
 config.ModInfo.U_nom_mod = U_nom_mod;
 config.ModInfo.U_min_mod = U_min_mod;
 config.ModInfo.U_max_mod = U_max_mod;
+config.ModInfo.I_max_mod = I_max_mod;
 
 
 %% Also include information about the electrical interconnection

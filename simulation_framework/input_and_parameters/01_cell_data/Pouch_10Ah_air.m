@@ -40,22 +40,19 @@ BatPara.electrical.I_max = 10;         % Maximum cell current in A
 % compared to https://github.com/TUMFTM/sim_battery_system, we don't use
 % the thermal parameters and the format of this model, but our own.
 
-BatPara.physical.A_K = [0.006,0.082,0.170];                                 % Height (x), Width (y) and Length (z) (in m)
-        
-BatPara.physical.rho = 2453;                                                % Density [kg/m^3]
-BatPara.physical.m = BatPara.physical.rho*prod(BatPara.physical.A_K);       % Mass [kg] (here it's calculated from the cell's dimension and density)
-BatPara.physical.c = 1066;                                                  % specific heat capacity [J/(kg*K)]
-BatPara.physical.lambda = [0.84, 26.05, 26.05];                             % Thermal conductivity in x-,y-,z-dimension [W/(m*K)]
+BatPara.physical.rho = 2453;                      % Density [kg/m^3]
+BatPara.physical.c = 1066;                        % specific heat capacity [J/(kg*K)]
+BatPara.physical.lambda = [0.84, 26.05, 26.05];   % Thermal conductivity in x-,y-,z-dimension [W/(m*K)]
 
-if strcmp(BatPara.cell_type, 'Cyl')
-    BatPara.physical.length = 65.0;         % Cylindrical cell only: Length in m
-    BatPara.physical.diameter = 18;         % Cylindrical cell only: Diameter in m
-    
-elseif strcmp(BatPara.cell_type, 'Pouch') || strcmp(BatPara.cell_type, 'Pris')
-    BatPara.physical.thickness = 0.006;     % Pouch/Prismatic cell only: Thickness in m
-    BatPara.physical.width     = 0.082;     % Pouch/Prismatic cell only: Width in m
-    BatPara.physical.height    = 0.170;     % Pouch/Prismatic cell only: Height in m
-    
-else
-    error('Unknown cell type!')
-end
+% Cell dimensions. Note: For cylindrical cells two of those values must be
+% the same --> This will be considered as diameter. The diameter must be
+% identical or smaller as the length!
+
+BatPara.physical.dim_x = 0.006;     % Cell dimension in x-direction
+BatPara.physical.dim_y = 0.082;     % Cell dimension in y-direction
+BatPara.physical.dim_z = 0.170;     % Cell dimension in z-direction
+
+% Cell mass (Calculated from the cell's dimensions and density)
+
+BatPara.physical.m = get_cell_mass(BatPara.physical.dim_x, BatPara.physical.dim_y, BatPara.physical.dim_z, BatPara.physical.rho, BatPara.cell_type);
+

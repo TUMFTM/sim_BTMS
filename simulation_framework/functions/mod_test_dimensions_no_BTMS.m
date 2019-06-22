@@ -11,19 +11,10 @@ function [config, passed] = mod_test_dimensions_no_BTMS(config)
 
 m_cell = config.BatPara.physical.m;
 
-if strcmp(config.BatPara.cell_type, 'Cyl')
-    length_cell = config.BatPara.physical.length;
-    diameter_cell = config.BatPara.physical.diameter;
+dim_x = config.BatPara.physical.dim_x;
+dim_y= config.BatPara.physical.dim_y;
+dim_z = config.BatPara.physical.dim_z;
     
-elseif strcmp(config.BatPara.cell_type, 'Pouch') || strcmp(config.BatPara.cell_type, 'Pris')
-    thickness_cell = config.BatPara.physical.thickness;
-    width_cell = config.BatPara.physical.width;
-    height_cell = config.BatPara.physical.height;
-    
-else
-    error('Unknown cell type!')
-end
-
 
 % Electrical connection data
 
@@ -48,37 +39,31 @@ sf_mod_mass = 1 + config.SysSpec.sf_mass_mod;    % Safety factor for module mass
 
 mass_mod = m_cell * s * p * sf_mod_mass;    % Total module mass   
 
-if strcmp(config.BatPara.cell_type, 'Cyl')
-    length_mod = length_cell * s * sf_mod_dim;       
-    width_mod = diameter_cell * pe * sf_mod_dim;
-    height_mod = diameter_cell * e * sf_mod_dim;
-        
-else
-    length_mod = thickness_cell * s * sf_mod_dim;
-    width_mod = width_cell * pe * sf_mod_dim;
-    height_mod = height_cell * e * sf_mod_dim;
-end
+dim_x_mod = dim_x * s * sf_mod_dim;
+dim_y_mod = dim_y * pe * sf_mod_dim;
+dim_z_mod = dim_z * e * sf_mod_dim;
+
 
 
 
 %% Test module against criteria
 
-passed = struct('mass_mod',false, 'length_mod',false, 'width_mod',false, 'height_mod',false);
+passed = struct('mass_mod',false, 'dim_x_mod',false, 'dim_y_mod',false, 'dim_z_mod',false);
 
 if mass_mod <= config.SysSpec.m_mod_max
     passed.mass_mod = true;
 end
 
-if length_mod <= config.SysSpec.l_mod_max
-    passed.length_mod = true;
+if dim_x_mod <= config.SysSpec.dim_x_mod_max
+    passed.dim_x_mod = true;
 end
 
-if width_mod <= config.SysSpec.w_mod_max
-    passed.width_mod = true;
+if dim_y_mod <= config.SysSpec.dim_y_mod_max
+    passed.dim_y_mod = true;
 end
 
-if height_mod <= config.SysSpec.h_mod_max
-    passed.height_mod = true;
+if dim_z_mod <= config.SysSpec.dim_z_mod_max
+    passed.dim_z_mod = true;
 end
 
 
@@ -86,6 +71,6 @@ end
 %% Write module info
 
 config.ModInfo.mass_mod = mass_mod;
-config.ModInfo.length_mod = length_mod;
-config.ModInfo.width_mod = width_mod;
-config.ModInfo.height_mod = height_mod;
+config.ModInfo.dim_x_mod = dim_x_mod;
+config.ModInfo.dim_y_mod = dim_y_mod;
+config.ModInfo.dim_z_mod = dim_z_mod;

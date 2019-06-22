@@ -40,6 +40,7 @@ SimPara.t_sim  = 2500;                          % Total simulation time in s
 
 input_configs = {
     'Pouch_10Ah_air', 'system_parameters', 'liquid_Pouch'; ...
+    'Cyl_2500mAh_air', 'system_parameters', 'liquid_Pouch'; ...
     'Pouch_20Ah_air', 'system_parameters', 'liquid_Pouch'};
 
 % Provide the required system specification
@@ -91,7 +92,7 @@ for ii = 1:size(input_configs, 1)
     % This is either defined by the max. individual cell current and the 
     % requested fast-charging capability or the module capacity.
     
-    p_min_mod = max(ceil(SysSpec.I_sys_max / BatPara.electrical.I_max), ceil(SysSpec.C_mod_min / BatPara.electrical.C_A));
+    p_min_mod = max(ceil(SysSpec.I_mod_max / BatPara.electrical.I_max), ceil(SysSpec.C_mod_min / BatPara.electrical.C_A));
    
     
     % Spatial arrangement of the parallel connection
@@ -253,7 +254,7 @@ for ii = 1:size(configs_2_mod_passed, 2)
     
     % Determine number of modules connected in parallel inside the battery system
     
-    p_sys_raw = ceil(config.SysSpec.C_sys_min / config.ModInfo.C_mod);
+    p_sys_raw = max(ceil(config.SysSpec.I_sys_max / config.ModInfo.I_max_mod), ceil(config.SysSpec.C_sys_min / config.ModInfo.C_mod));
     
     
     % Spatial arrangement of the parallel connection
