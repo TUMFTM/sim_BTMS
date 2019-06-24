@@ -227,6 +227,7 @@ clearvars -except configs*  % Clear everything instead the array with the config
 % criteria. What remains will be provided with a BTMS.
 
 clear append_configs            % Clear persistent variable in function
+clear get_config_ID             % Clear persistent variable in function
 load('configs_2_mod_passed');   % Load the feasible configurations from last step if not already in workspace
 
 configs_3_sys_all = preallocate_configs_3_sys; % Preallocating the cell-array with all configuations that passed the module tests
@@ -278,8 +279,9 @@ for ii = 1:size(configs_2_mod_passed, 2)
             config.SysInfo.num_parallel_mods_sys = p_sys;
             config.SysInfo.num_layers_sys = epe_sys(jj).e(kk);
             config.SysInfo.num_parallel_mods_per_layer_sys = epe_sys(jj).pe(kk);
-
-          
+            
+            config.sys_ID = get_config_ID;  % Assign a unique ID to this config
+            
             configs_3_sys_all = append_configs(configs_3_sys_all, config); % Save everything in a cell-array 
         end
     end
@@ -297,7 +299,7 @@ save('BTMS_simulation_results\configs_3_sys_all', 'configs_3_sys_all')  % Save a
 clearvars -except configs*  % Clear everything instead the array with the configs.
 
 
-%% Step 4: Basic Testing on pack-level
+%% Step 4: Basic testing on pack-level
 
 % Similar to step 2 we test the battery packs we created in the last step
 % for basic compliance with mass, dimension and energy critera to sort out
@@ -354,3 +356,54 @@ save('BTMS_simulation_results\configs_4_sys_passed', 'configs_4_sys_passed')  % 
 save('BTMS_simulation_results\configs_4_sys_failed', 'configs_4_sys_failed')  % Save all failed configurations of this run in a MAT-File
 
 clearvars -except configs*  % Clear everything instead the array with the configs.
+
+
+
+%% Step 5: Add the BTMS to the modules and system
+
+% Now we have found module and pack configurations that may work from a
+% data-sheet based point of view. In this step we take those systems and
+% include a BTMS configuration.
+
+clear append_configs            % Clear persistent variable in function
+load('configs_4_sys_passed');   % Load the feasible configurations from last step if not already in workspace
+
+configs_5_BTMS_all = preallocate_configs_5_BTMS; % Preallocating the cell-array with all configuations that passed the module tests
+
+
+% Iterate through the configurations
+
+for ii = 1:1:size(configs_4_sys_passed, 2)
+    
+    config = configs_4_sys_passed(ii);
+
+    config.BTMSInfo = 'Dummy';
+    
+    configs_5_BTMS_all = append_configs(configs_5_BTMS_all, config);
+
+end
+
+
+% Check if feasible configurations have been found 
+
+check_feasible_configs(configs_5_BTMS_all);
+
+
+% Save results of this step
+
+save('BTMS_simulation_results\configs_5_BTMS_all', 'configs_5_BTMS_all')  % Save all possible configurations of this run in a MAT-File
+
+clearvars -except configs*  % Clear everything instead the array with the configs.
+
+
+%% Step 6: Basic tests of the full system
+
+
+
+%% Step 7: Thermal simulation on the module level
+
+
+
+%% Step 8: Thermal simulation of the full system
+
+

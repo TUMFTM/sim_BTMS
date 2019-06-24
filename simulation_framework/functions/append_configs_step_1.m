@@ -12,7 +12,10 @@ else
     index = size(configs,2)+1;
 end
 
- configs(index).BatPara = BatPara;
- configs(index).BTMSPara = BTMSPara;
- configs(index).SysPara = SysPara;
- configs(index).SysSpec = SysSpec;
+configs(index).mod_ID = index;
+configs(index).BatPara = BatPara;
+configs(index).BTMSPara = BTMSPara;
+configs(index).SysPara = SysPara;
+configs(index).SysSpec = SysSpec;
+
+end
