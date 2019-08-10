@@ -29,23 +29,11 @@
 % Cooling of the outer cells of a module (gets implied via system-level definitions)
 % Cooling of the cells inside the module
 %     perpendicular to the x, y and z axis                                   --> mod_inside_x, mod_inside_y, mod_inside_z
-    
-% Every 'mod_inside_*' option will iterate through all possibilities of BTMS
-% cooling channel placement. For a module of n cells ( o ) and liquid cooling
-% channels ( | ) this will look like this:
-
-% Iteration 1:    o o o o     (no  internal cooling channel)
-% Iteration 2:    o o|o o     ( 1  internal cooling channel)
-% Iteration 3:    o|o o|o     ( 2  internal cooling channels)
-% Iteration 4:    o|o|o|o     (n-1 internal cooling channels)
-
-% Note that the algorithm on the module level only offers symmetrical
-% solutions. 
 
 % For air as cooling medium it is always assumed that all cells/modules are
 % in the airflow if internal cooling is selected. In this case the parameter
-% mod_inside_x determine the direction of the airflow. Note that only one
-% mod_inside_x may be set true in this case!
+% sys_inside_x determine the direction of the airflow. Note that only one
+% sys_inside_* may be set true in this case!
 
 % For the case of liquid cooling, setting more than one *_inside_* value to
 % true will lead to a "crossing" of cooling channels. The model assumes
@@ -59,155 +47,141 @@
 % how the models and the battery pack looks like and therefore cannot
 % determine the number of cooling channels.
 
-% Use the value 'min_flow_speed' or 'max_flow_speed' to exclude configs with 
-% unrealitically high flow speeds.
-
 
 
 %% Basic information
 
-BTMSPara.name = mfilename;              % Get config name from filename (for better overview)
-BTMSPara.cooling_method = 'liquid';     % specify cooling method. Either 'air' or 'liquid'. This gets used for the calculation of the heat transfer coefficients
+BTMSPara.name = mfilename;                      % Get config name from filename (for better overview)
 
-BTMSPara.T_fluid_in     = 20;           % Inlet temperature of cooling fluid in °C
-BTMSPara.Vdot_fluid     = 0.0045;       % Overall fluid mass flow in m^3/s                 % Value for air cooling: 0.0625
-BTMSPara.ref_pressure   = 101325;       % Reference pressure in Pa
+BTMSPara.T_fluid_in     = 20;                   % Inlet temperature of cooling fluid in °C
+BTMSPara.Vdot_fluid     = 0.0045;               % Overall fluid mass flow in m^3/s                 % Value for air cooling: 0.0625
+BTMSPara.ref_pressure   = 101325;               % Reference pressure in Pa
 
-BTMSPara.FluidType      = 'water';      % Specify fluid type for CoolProp (see: http://www.coolprop.org/)
+BTMSPara.FluidType      = 'INCOMP::MEG-50%';    % Specify fluid type for CoolProp (see: http://www.coolprop.org/) (Water with 50% ethylenglycol)
 
+BTMSPara.lambda_wall = 400;                     % Thermal conductivity of the material of the cooling installation in W/m*K (copper)
+BTMSPara.wt          = 0.00015;                 % Wall thickness of the cooling installation in m
+
+BTMSPara.ch_width = 0.003;                      % Width of cooling channels in m
+BTMSPara.ch_ratio_sys = 0.95;                   % Ratio of channel size relative to x,y or z dimensions of battery system
+BTMSPara.ch_ratio_cell = 0.90;                  % Ratio of channel size relative to x,y or z dimensions of battery system
 
 
 %% Natural convection around cells
 
-% Heat losses of cells due to natural convection. The assumption is that
-% the total surface area of the cells exchanges heat with a environmental
-% temperature. There are two different values for cells inside the module
-% and cells at the surface area of the module.
-
-BTMSPara.enable_convection = false;    % Enable Subsystem for calculation of natural convection
-
-BTMSPara.NatKonv.T_inf_inside  = 20;   % Ambient temperatures around the outside cells in °C
-BTMSPara.NatKonv.alpha_inside  = 0;    % Heat transfer coefficient for outside cells in W/m^2*K
-
-BTMSPara.NatKonv.T_inf_outside = 20;   % Ambient temperatures around the inside cells in °C
-BTMSPara.NatKonv.alpha_outside = 0;    % Heat transfer coefficient for inside cells in W/m^2*K
+% The framework disregards heat dissipation of the battery system to the
+% environment due to natural convection to comply with the worst-case
+% assumption used to design the BTMS.
+% If required this can easily been added to the simulation framework by
+% adding the heat transfer coefficient and the environmental temperature to
+% the signals 'T_cell_ambient' and 'alpha_cell_ambient'. Refer to the
+% subsystem 'Create BTMS input' to see how those values are scaled to
+% incorporate more than one heat transfer path.
 
 
 
 %% System-level: Bottom cooling
 
 % Assumes all modules are standing on a cooling plate with uniform temperature. 
-% Fluid flow along x-dim of battery system
+% Fluid flow along x-dim of battery system.
+% This only affects the bottom layer of modules in the battery system. So
+% all module with a num_layers_sys >= 2 won't be directly affected by this
+% option.
 
-BTMSPara.enable_sys_bottom = true;      % Enable Subsystem for side/sheath cooling
-
-BTMSPara.sys_bottom.lambda = 5;         % Thermal conductivity of the material of the cooling installation in W/m*K
-BTMSPara.sys_bottom.wt     = 0.00015;   % Wall thickness of the cooling installation in m
-
-BTMSPara.sys_bottom.ch_width = 0.003;   % Width of cooling channel in m
-BTMSPara.sys_bottom.ch_ratio = 0.95;    % Ratio of channel size relative to y-dim of battery pack)
+BTMSPara.enable_sys_bottom = true;
 
 
+%% System-level: Top cooling
 
-%% System-level: 
+% Assumes a cooling plate with uniform temperature on top of the battery system. 
+% Fluid flow along x-dim of battery system.
+% This only affects the top layer of modules in the battery system.
 
-BTMSPara.enable_sys_top = true;     % Enable Subsystem for side/sheath cooling
-
-BTMSPara.sys_top.lambda = 5;        % Thermal conductivity of the material of the cooling installation in W/m*K
-BTMSPara.sys_top.wt     = 0.00015;  % Wall thickness of the cooling installation in m
-
-BTMSPara.sys_top.ch_width = 0.003;   % Width of cooling channel in m
-BTMSPara.sys_top.ch_ratio = 0.95;    % Ratio of channel size relative to y-dim of battery pack)
+BTMSPara.enable_sys_top = true;
 
 
-%% System-level: 
+%% System-level: Cooling of left/right of battery system
 
-BTMSPara.enable_sys_leftright = true;     % Enable Subsystem for side/sheath cooling
+% Assumes a cooling plate with uniform temperat%%ure on the left and right of the battery system. 
+% Fluid flow along x-dim of battery system.
+% This only affects the outer left and right modules.
 
-BTMSPara.sys_leftright.lambda = 5;        % Thermal conductivity of the material of the cooling installation in W/m*K
-BTMSPara.sys_leftright.wt     = 0.00015;  % Wall thickness of the cooling installation in m
-
-BTMSPara.sys_leftright.ch_width = 0.003;   % Width of cooling channel in m
-BTMSPara.sys_leftright.ch_ratio = 0.95;    % Ratio of channel size relative to y-dim of battery pack)
+BTMSPara.enable_sys_leftright = true;
 
 
-%% System-level: 
+%% System-level: Cooling of front/back
 
-BTMSPara.enable_sys_frontback = true;     % Enable Subsystem for side/sheath cooling
+% Assumes a cooling plate with uniform temperature on the front and back of the battery system. 
+% Fluid flow along x-dim of battery system.
+% This only affects the outer left and right modules.
 
-BTMSPara.sys_frontback.lambda = 5;        % Thermal conductivity of the material of the cooling installation in W/m*K
-BTMSPara.sys_frontback.wt     = 0.00015;  % Wall thickness of the cooling installation in m
-
-BTMSPara.sys_frontback.ch_width = 0.003;   % Width of cooling channel in m
-BTMSPara.sys_frontback.ch_ratio = 0.95;    % Ratio of channel size relative to y-dim of battery pack)
+BTMSPara.enable_sys_frontback = true;
 
 
-%% System-level: 
+%% System-level: Cooling between the modules in the spacial directions
 
-BTMSPara.enable_sys_inside_x = true;     % Enable Subsystem for side/sheath cooling
+% Assumes a cooling plate with uniform temperature between the modules.
 
-BTMSPara.sys_inside_x.lambda = 5;        % Thermal conductivity of the material of the cooling installation in W/m*K
-BTMSPara.sys_inside_x.wt     = 0.00015;  % Wall thickness of the cooling installation in m
+% Fluid flow along y-dim of battery system.
 
-BTMSPara.sys_inside_x.ch_width = 0.003;   % Width of cooling channel in m
-BTMSPara.sys_inside_x.ch_ratio = 0.95;    % Ratio of channel size relative to y-dim of battery pack)
+BTMSPara.enable_sys_inside_x = true;
 
 
-%% System-level: 
+% Fluid flow along x-dim of battery system.
 
-BTMSPara.enable_sys_inside_y = true;     % Enable Subsystem for side/sheath cooling
-
-BTMSPara.sys_inside_y.lambda = 5;        % Thermal conductivity of the material of the cooling installation in W/m*K
-BTMSPara.sys_inside_y.wt     = 0.00015;  % Wall thickness of the cooling installation in m
-
-BTMSPara.sys_inside_y.ch_width = 0.003;   % Width of cooling channel in m
-BTMSPara.sys_inside_y.ch_ratio = 0.95;    % Ratio of channel size relative to y-dim of battery pack)
+BTMSPara.enable_sys_inside_y = true;
+BTMSPara.enable_sys_inside_z = true;
 
 
-%% System-level: 
 
-BTMSPara.enable_sys_inside_z = true;     % Enable Subsystem for side/sheath cooling
+%% About cooling inside of the battery system
 
-BTMSPara.sys_inside_z.lambda = 5;        % Thermal conductivity of the material of the cooling installation in W/m*K
-BTMSPara.sys_inside_z.wt     = 0.00015;  % Wall thickness of the cooling installation in m
+% Every '*_inside_*' option will place cooling channels in the specified
+% spacial direction on the module level. This is specified by a vector
+% specifying the position of the cooling plates relative to the cell count
+% inside the module. 
 
-BTMSPara.sys_inside_z.ch_width = 0.003;   % Width of cooling channel in m
-BTMSPara.sys_inside_z.ch_ratio = 0.95;    % Ratio of channel size relative to y-dim of battery pack)
+% Example for a 4s module:
 
+% 4s --> Only cells in x-direction
 
-%% Module-level: 
+% Legend: o = cell, | = cooling plate
 
-BTMSPara.enable_mod_inside_x = true;     % Enable Subsystem for side/sheath cooling
+% Design 1:    o o o o     mod_inside_x_layers = [] (same as enable_sys_inside_* = false)
+% Design 2:    o o|o o     mod_inside_x_layers = [2]
+% Design 3:    o|o o|o     mod_inside_x_layers = [1,3]
+% Design 4:    o|o|o|o     mod_inside_x_layers = [1,2,3]
 
-BTMSPara.mod_inside_x.lambda = 5;        % Thermal conductivity of the material of the cooling installation in W/m*K
-BTMSPara.mod_inside_x.wt     = 0.00015;  % Wall thickness of the cooling installation in m
+% To only cool the outside of module use 'enable_sys_between_*' above.
 
-BTMSPara.mod_inside_x.ch_width = 0.003;   % Width of cooling channel in m
-BTMSPara.mod_inside_x.ch_ratio = 0.95;    % Ratio of channel size relative to y-dim of battery pack)
-
-
-%% Module: Side cooling (Prismativ and Pouch) and sheath cooling (Cylindrical) of cells
-
-BTMSPara.enable_mod_inside_y = true;     % Enable Subsystem for side/sheath cooling
-
-BTMSPara.mod_inside_y.lambda = 5;        % Thermal conductivity of the material of the cooling installation in W/m*K
-BTMSPara.mod_inside_y.wt     = 0.00015;  % Wall thickness of the cooling installation in m
-
-BTMSPara.mod_inside_y.ch_width = 0.003;   % Width of cooling channel in m
-BTMSPara.mod_inside_y.ch_ratio = 0.95;    % Ratio of channel size relative to y-dim of battery pack)
-
-
-%% Module: Side cooling (Prismativ and Pouch) and sheath cooling (Cylindrical) of cells
-
-BTMSPara.enable_mod_inside_z = true;     % Enable Subsystem for side/sheath cooling
-
-BTMSPara.mod_inside_z.lambda = 5;        % Thermal conductivity of the material of the cooling installation in W/m*K
-BTMSPara.mod_inside_z.wt     = 0.00015;  % Wall thickness of the cooling installation in m
-
-BTMSPara.mod_inside_z.ch_width = 0.003;   % Width of cooling channel in m
-BTMSPara.mod_inside_z.ch_ratio = 0.95;    % Ratio of channel size relative to y-dim of battery pack)
+% Some hints:
+% - This requires information about the module design (number of cells in 
+%   all directions). It is recommended to first do a rough design without
+%   this option and only turn this option one once you have an idea how
+%   your modules will look like and know you really need cooling inside the
+%   modules
+% - In 'mod_inside_*_layers' only numbers from 1 to the number of cells in
+%   the spacial direction within the module -1 is supported. Everything else
+%   will throw an error in the BTMS configuration.
+% - There is a possibility to plot your system design for better
+%   visualisation. XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
-%% Check validity of configuration
+%% Module-level: Cooling inside modules in x-direction
 
-check_validity_BTMS_config(BTMSPara);
+
+BTMSPara.enable_mod_inside_x = false;
+BTMSPara.mod_inside_x_layers = [];     
+
+
+%% Module-level: Cooling inside modules in y-direction
+
+BTMSPara.enable_mod_inside_y = false;
+BTMSPara.mod_inside_y_layers = []; 
+
+
+%% Module-level: Cooling inside modules in z-direction
+
+BTMSPara.enable_mod_inside_z = false;
+BTMSPara.mod_inside_z_layers = [];
+

@@ -19,8 +19,8 @@ I_max_cell = config.BatPara.electrical.I_max;   % Maximum cell current in A
 
 % Electrical connection data
 
-p =  config.SysPara.p;  % Total number of parallel cells
-s =  config.SysPara.s;  % Total number of serial cells
+p =  config.SysPara.p_mod;  % Total number of parallel cells
+s =  config.SysPara.s_mod;  % Total number of serial cells
 
 
 
@@ -63,8 +63,8 @@ config.ModInfo.I_max_mod = I_max_mod;
 % but we also include it to config.ModInfo so all relevant info can be
 % gathered in first sight.
 
-config.ModInfo.num_cells_mod = config.SysPara.p * config.SysPara.s;
-config.ModInfo.num_serial_cells_mod = config.SysPara.s;
-config.ModInfo.num_parallel_cells_mod = config.SysPara.p;
-config.ModInfo.num_layers_mod = config.SysPara.e;
-config.ModInfo.num_parallel_cells_per_layer_mod = config.SysPara.pe;
+config.ModInfo.num_cells_mod = p * s;
+config.ModInfo.num_serial_cells_mod = s;
+config.ModInfo.num_parallel_cells_mod = p;
+config.ModInfo.num_layers_mod = config.SysPara.e_mod;
+config.ModInfo.num_parallel_cells_per_layer_mod = config.SysPara.pe_mod;

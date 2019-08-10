@@ -18,10 +18,10 @@ dim_z = config.BatPara.physical.dim_z;
 
 % Electrical connection data
 
-p =  config.SysPara.p;  % Total number of parallel cells
-s =  config.SysPara.s;  % Total number of serial cells
-pe = config.SysPara.pe; % Total number of parallel cells on one level
-e =  config.SysPara.e;  % Total number of levels
+p  =  config.SysPara.p_mod;  % Total number of parallel cells
+s  =  config.SysPara.s_mod;  % Total number of serial cells
+pe =  config.SysPara.pe_mod; % Total number of parallel cells on one level
+e  =  config.SysPara.e_mod;  % Total number of levels
 
 
 % Correction and safety factors

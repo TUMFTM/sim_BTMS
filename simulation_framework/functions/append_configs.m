@@ -27,7 +27,9 @@ switch nargin
             index = size(configs,2)+1;
         end
         
-        if isfield(configs, 'Tests_sys')
+        if isfield(configs, 'Tests_BTMS')
+            config_append.Tests_BTMS = passed;        
+        elseif isfield(configs, 'Tests_sys')
             config_append.Tests_sys = passed;
         elseif isfield(configs, 'Tests_mod')
             config_append.Tests_mod = passed;
