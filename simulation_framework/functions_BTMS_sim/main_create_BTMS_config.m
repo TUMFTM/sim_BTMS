@@ -359,6 +359,8 @@ BTMSConfig.info.num_channels_inside_mod_z_dir = num_mod_inside_z;
 
 BTMSConfig.info.num_channels_inside_mod = num_mod_inside;
 
+BTMSConfig.info.channel_start_layers = ch_start_layers;
+
 BTMSConfig.info.channel_definition_cell = ch_def;
 
 BTMSConfig.info.channel_cross_sections = ch_crosss;

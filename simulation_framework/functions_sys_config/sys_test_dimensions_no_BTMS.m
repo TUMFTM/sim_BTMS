@@ -21,8 +21,8 @@ dim_z_mod = config.ModInfo.dim_z_mod;
 
 tot = config.SysInfo.num_mods_sys;                     % Total number of modules
 s   = config.SysInfo.num_serial_mods_sys;              % Total number of serial modules
-pe  = config.SysInfo.num_layers_sys;                   % Total number of parallel cells on one level
-e   = config.SysInfo.num_parallel_mods_per_layer_sys;  % Total number of levels
+pe  = config.SysInfo.num_parallel_mods_per_layer_sys;  % Total number of parallel cells on one level
+e   = config.SysInfo.num_layers_sys;                   % Total number of levels
 
 
 % Correction and safety factors

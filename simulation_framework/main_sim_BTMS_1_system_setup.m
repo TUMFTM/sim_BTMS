@@ -1,3 +1,11 @@
+%% Info
+
+% Part 1 of the BTMS configuration: Creation of the battery systems and
+% BTMS concepts
+
+% For analysis and simulation of the systems refer to 'main_sim_BTMS_2_system_simulation'.
+
+
 %% Initialation
 
 clearvars
@@ -10,7 +18,7 @@ addpath(genpath('battery_system_simulation'));  % Data of battery system simulat
 % addpath(genpath('BTMS_simulation'));          % Data of BTMS simulation
 addpath(genpath('BTMS_simulation_results'));    % Folder with simulation results
 
-addpath(genpath('functions'));                  % Functions and subroutines
+addpath(genpath('functions_sys_config'));                  % Functions and subroutines
 addpath(genpath('coolprop'));                   % CoolProp data used to obtain fluid characteristics
 
 addpath(genpath('functions_BTMS_sim'));         % Functions for BTMS setup and sim
@@ -471,15 +479,6 @@ save('BTMS_simulation_results\configs_6_BTMS_failed', 'configs_6_BTMS_failed')  
 clearvars -except configs*  % Clear everything instead the array with the configs.
 
 
-%% Step 7: Plotting of the system
+%% Next steps
 
-
-
-
-%% Step 7: Thermal simulation on the module level
-
-
-
-%% Step 8: Thermal simulation of the full system
-
-
+% Refer to 'main_sim_BTMS_2_system_simulation'
