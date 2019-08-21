@@ -2,7 +2,7 @@
 
 % Part 2 of the BTMS configuration: Analyze and simulate the systems
 
-% To create the systems refer to 'main_sim_BTMS_1_system_setup'.
+% To create the configurations refer to 'main_sim_BTMS_1_system_setup'.
 
 
 %% Initialization
@@ -26,19 +26,21 @@ addpath(genpath('input_and_parameters'));       % Input data for the system conf
 
 %% User Input: Select simulation modes
 
-t_modes.plot_sys = true;        % Plot the system configuration
-t_modes.sim_module = true;      % Electrical simulation of modules
-t_modes.sim_sys = true;         % Electrical an thermal simulation of the whole system
+modes.plot_sys = false;        % Plot the system configuration
+modes.sim_module = true;      % Electrical simulation of modules
+modes.sim_sys = true;         % Electrical an thermal simulation of the whole system
 
-t_config_file = 'configs_6_BTMS_passed';    % Select the mat-File with the configs for simulation
+config_file = 'configs_6_BTMS_passed';    % Select the mat-File with the configs for simulation
 
 % Note: The steps above will be performed for all configs in the provided
 % mat-file and therefore may take a long time!
 
+load(config_file)
+
 
 %% Plotting of systems
 
-if t_modes.plot_sys == true
+if modes.plot_sys == true
 
     for ii = 1:1:size(configs_6_BTMS_passed, 2)
 
@@ -50,24 +52,56 @@ if t_modes.plot_sys == true
 end
 
 
+%% Electrical simulation and evaluation on module level
+
+clear sim_module % Clear persistent variable
+
+if modes.sim_module == true
+    
+    t_count_res_passed = 1;
+    t_count_res_failed = 1;
+
+    for ii = 1:1:size(configs_6_BTMS_passed, 2)
+
+        config = configs_6_BTMS_passed(ii);
+        
+        results = sim_module(config);
+        
+        if isempty(results) == false
+        
+            [results, passed_mod_el] = check_results_mod(results, config);  
+
+            if check_for_failed_tests(passed_mod_el)
+                
+                results_mod_failed(t_count_res_failed) = results;
+                t_count_res_failed = t_count_res_failed + 1;
+                fprintf('Warning: The module with mod_ID %i failed the electrical tests and should be excluded from further consideration.\n\n',results.mod_ID)
+                
+            else
+                
+                results_mod_passed(t_count_res_passed) = results;
+                t_count_res_passed = t_count_res_passed + 1;
+                
+            end
+        end
+    end 
+end
+
+clearvars results config t_* SimPara ii
+
+save('BTMS_simulation_results\configs_7_mod_sim', 'results_*')  % Save all possible configurations of this run in a MAT-File
 
 
-%% Electrical simulation on module level
-
-% for ii = 1:1:size(configs_1_mod_all, 2)
-%     
-%     config = configs_6_BTMS_passed(ii);
-%    
-%     
-% end
-
-
-%% Electrical an thermal simulation on system level
-
-% for ii = 1:1:size(configs_1_mod_all, 2)
-%     
-%     config = configs_6_BTMS_passed(ii);
-%    
+%% Electrical and thermal simulation and evaluation on system level
+% 
+% if t_modes.sim_module == true
+% 
+%     for ii = 1:1:size(configs_6_BTMS_passed, 2)
+% 
+%         config = configs_6_BTMS_passed(ii);
+%         sim_system(config);
+% 
+%     end
 %     
 % end
 
