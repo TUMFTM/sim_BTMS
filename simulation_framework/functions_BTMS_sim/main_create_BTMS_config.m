@@ -326,7 +326,14 @@ ch_alpha = calc_alpha_channel(fluid_para, ch_w, ch_width, ch_length, ch_inside);
 
 %% Output BTMSConfig structure for simulation
 
+% Check if there is any BTMS included in the config
 
+if isempty(ch_def_mat) == false
+    BTMSConfig.BTMS_included = true;   
+else
+    BTMSConfig.BTMS_included = false;   
+end
+    
 % Everything needed for the simulation
 
 BTMSConfig.T_fluid = T_fluid;
@@ -368,10 +375,10 @@ BTMSConfig.info.channel_chross_section_ratio = ch_crosss_ratio;
 
 BTMSConfig.info.channel_heat_tranfer_surface_cells = ch_A_heat;
 
-BTMSConfig.info.channel_flow_speed = ch_w(1);
+BTMSConfig.info.channel_flow_speed = ch_w;
 BTMSConfig.info.channel_volume_flow = ch_Vdot;
 
 BTMSConfig.info.channel_wall_thickness = wall_thickness;
 
+    
 end
-

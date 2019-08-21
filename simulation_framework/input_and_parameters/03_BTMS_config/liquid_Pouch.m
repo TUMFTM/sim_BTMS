@@ -53,7 +53,7 @@
 
 BTMSPara.name = mfilename;                      % Get config name from filename (for better overview)
 
-BTMSPara.T_fluid_in     = 20;                   % Inlet temperature of cooling fluid in °C
+BTMSPara.T_fluid_in     = 20;                   % Inlet temperature of cooling fluid in ï¿½C
 BTMSPara.Vdot_fluid     = 0.0045;               % Overall fluid mass flow in m^3/s                 % Value for air cooling: 0.0625
 BTMSPara.ref_pressure   = 101325;               % Reference pressure in Pa
 
@@ -122,15 +122,19 @@ BTMSPara.enable_sys_frontback = true;
 
 % Assumes a cooling plate with uniform temperature between the modules.
 
-% Fluid flow along y-dim of battery system.
+% Fluid flow perpendicular to x-dim of battery system.
 
-BTMSPara.enable_sys_inside_x = true;
+BTMSPara.enable_sys_inside_x = false;
 
 
-% Fluid flow along x-dim of battery system.
+% Fluid flow perpendicular to y-dim of battery system.
 
-BTMSPara.enable_sys_inside_y = true;
-BTMSPara.enable_sys_inside_z = true;
+BTMSPara.enable_sys_inside_y = false;
+
+
+% Fluid flow perpendicular to z-dim of battery system
+
+BTMSPara.enable_sys_inside_z = false;
 
 
 
@@ -164,23 +168,23 @@ BTMSPara.enable_sys_inside_z = true;
 %   the spacial direction within the module -1 is supported. Everything else
 %   will throw an error in the BTMS configuration.
 % - There is a possibility to plot your system design for better
-%   visualisation. XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+%   visualisation. Run the configuration 'main_sim_BTMS_1_system_setup' and 
+%   refer to 'main_sim_BTMS_2_system_simulation'.
 
 
-%% Module-level: Cooling inside modules in x-direction
-
+%% Module-level: Cooling inside modules perpendicular to x-direction
 
 BTMSPara.enable_mod_inside_x = false;
 BTMSPara.mod_inside_x_layers = [];     
 
 
-%% Module-level: Cooling inside modules in y-direction
+%% Module-level: Cooling inside modules perpendicular to y-direction
 
 BTMSPara.enable_mod_inside_y = false;
 BTMSPara.mod_inside_y_layers = []; 
 
 
-%% Module-level: Cooling inside modules in z-direction
+%% Module-level: Cooling inside modules perpendicular to z-direction
 
 BTMSPara.enable_mod_inside_z = false;
 BTMSPara.mod_inside_z_layers = [];
