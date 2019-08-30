@@ -38,8 +38,7 @@ Also available at [Springer Link](https://link.springer.com/article/10.1007/s100
 
 ## Features
 
-**This is a work in progress** so more features will get added to this repo in the future once its thoroughly tested and documented. 
-Here is a list of everything already included and features planned for the future. The goal is to get feature complete by Sept. 2019, but you know how plans work out sometimes...
+Here is a list of everything already included and features planned for the future.
 
  - [x] Specify different cell models (cylindrical, prismatic, pouch) and their physical, thermal and electric parameters (static and dynamic) and implications for the system level
  - [x] Specifying different basic BTMS configurations and their thermal properties (liquid, air cooling)
@@ -49,10 +48,10 @@ Here is a list of everything already included and features planned for the futur
  - [x] Determination of serial and parallel module interconnection and three-dimensional arrangement of the modules within a battery pack
  - [x] Basic testing on the pack level (dimensions, weight, energy, capacity, ...)
  - [x] Implementing an approach to keep track of the configurations and if and why they got excluded from the solution space.
- - [ ] Create BTMS architecture on the module level
- - [ ] Basic testing on the module and pack level with included BTMS
- - [ ] Electrical and thermal simulation of the modules including the BTMS
- - [ ] Electrical and thermal simulation of the pack including the BTMS
+ - [x] Create BTMS architecture on the module level
+ - [x] Basic testing on the module and pack level with included BTMS
+ - [x] Electrical and thermal simulation of the modules including the BTMS
+ - [x] Electrical and thermal simulation of the pack including the BTMS
 
 
 * * *
@@ -103,7 +102,7 @@ All cell, system, and BTMS data *currently included* in this release is for debu
 
 ### Basic steps
 
- - All the individual steps get called from the script *main_sim_BTMS.m* and also are thorougly documented there.
+ - All the individual steps get called from the script *main_sim_BTMS_1_system_setup.m* and also are documented there.
 
  - During the simulation some info is written to the command window. This looks like this (except): 
 	```
@@ -134,7 +133,9 @@ All cell, system, and BTMS data *currently included* in this release is for debu
 	
  - Every `*_passed.mat` includes everything needed for the next step, so you don't have to run the full algorithm everytime. Use "Run section" in Matlab to pick up where you left off.
  
-***#### More info coming with the addition of the planned features. ####***
+ - One the complete system and BTMS setup is complete and valid configs have been found (this is the case it a `configs_6_BTMS_passed.mat`) exits you can move over to *main_sim_BTMS_1_system_simulation.m* to test your systems with an electrical and/or thermal  simulation.
+ 
+ - In those simulation a CCCV charge cycle is applied to see if the system can withstand those stresses. Especially the coupled electricl and thermal simulation of the whole system takes a lot of time so take it easy and don't test too many systems at once. Refer to *main_sim_BTMS_1_system_simulation.m* and *functions_BTMS_sim/sim_module.m* or *functions_BTMS_sim/sim_system.m* for further information.
  
 
 ### How to adapt the framework to your LIBs and battery system

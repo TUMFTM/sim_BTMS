@@ -27,21 +27,26 @@ addpath(genpath('input_and_parameters'));       % Input data for the system conf
 %% User Input: Select simulation modes
 
 modes.plot_sys = false;        % Plot the system configuration
-modes.sim_module = true;      % Electrical simulation of modules
-modes.sim_sys = true;         % Electrical an thermal simulation of the whole system
+modes.sim_module = false;      % Electrical simulation of modules
+modes.sim_sys = true;          % Electrical an thermal simulation of the whole system
 
-config_file = 'configs_6_BTMS_passed';    % Select the mat-File with the configs for simulation
+config_file_mod_sim = 'configs_6_BTMS_passed';   % Select the mat-File with the configs for module simulation
+config_file_sys_sim = 'configs_6_BTMS_passed';   % Select the mat-File with the configs for module simulation
 
 % Note: The steps above will be performed for all configs in the provided
 % mat-file and therefore may take a long time!
 
-load(config_file)
+% For further system specifications and simulation parameters go to:
+%  - functions_BTMS_sim/sim_module
+%  - functions_BTMS_sim/sim_module
 
 
 %% Plotting of systems
 
 if modes.plot_sys == true
 
+    load(config_file_mod_sim)
+    
     for ii = 1:1:size(configs_6_BTMS_passed, 2)
 
         config = configs_6_BTMS_passed(ii);
@@ -57,6 +62,8 @@ end
 clear sim_module % Clear persistent variable
 
 if modes.sim_module == true
+    
+    load(config_file_mod_sim)
     
     t_count_res_passed = 1;
     t_count_res_failed = 1;
@@ -75,7 +82,7 @@ if modes.sim_module == true
                 
                 results_mod_failed(t_count_res_failed) = results;
                 t_count_res_failed = t_count_res_failed + 1;
-                fprintf('Warning: The module with mod_ID %i failed the electrical tests and should be excluded from further consideration.\n\n',results.mod_ID)
+                fprintf('Warning: The module with mod_ID %i failed the electrical tests and should be excluded from further consideration.\n\n', results.mod_ID)
                 
             else
                 
@@ -84,28 +91,50 @@ if modes.sim_module == true
                 
             end
         end
-    end 
+    end
+    
+    clearvars results config t_* SimPara ii
+    save('BTMS_simulation_results\configs_7_mod_sim', 'results_*')  % Save results of this run in a MAT-File
 end
-
-clearvars results config t_* SimPara ii
-
-save('BTMS_simulation_results\configs_7_mod_sim', 'results_*')  % Save all possible configurations of this run in a MAT-File
 
 
 %% Electrical and thermal simulation and evaluation on system level
-% 
-% if t_modes.sim_module == true
-% 
-%     for ii = 1:1:size(configs_6_BTMS_passed, 2)
-% 
-%         config = configs_6_BTMS_passed(ii);
-%         sim_system(config);
-% 
-%     end
-%     
-% end
 
+clear sim_system % Clear persistent variable
 
-%% Postprocessing
+if modes.sim_sys == true
+    
+    load(config_file_sys_sim)
+    clearvars results_mod_failed
+    
+    t_count_res_passed = 1;
+    t_count_res_failed = 1;
 
-clearvars *_t
+    for ii = 1:1:size(configs_6_BTMS_passed, 2)
+
+        config = configs_6_BTMS_passed(ii);
+        
+        results = sim_system(config);
+        
+        if isempty(results) == false
+        
+            [results, passed_sys_el] = check_results_sys(results, config);  
+
+            if check_for_failed_tests(passed_sys_el)
+                
+                results_sys_failed(t_count_res_failed) = results;
+                t_count_res_failed = t_count_res_failed + 1;
+                fprintf('Warning: The system with sys_ID %i failed the electrical tests and should be excluded from further consideration.\n\n', results.sys_ID)
+                
+            else
+                
+                results_sys_passed(t_count_res_passed) = results;
+                t_count_res_passed = t_count_res_passed + 1;
+                
+            end
+        end
+    end
+    
+    clearvars results config t_* SimPara ii
+    save('BTMS_simulation_results\configs_8_sys_sim', 'results_*')  % Save all possible configurations of this run in a MAT-File
+end

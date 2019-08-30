@@ -1,8 +1,8 @@
 function plot_system_architecture(config)
 
-[sys_ID, ~, SysSpec, ~, SysPara, ~, ~, SysInfo, BTMSConfig] = expand_config(config);
+[sys_ID, mod_ID, SysSpec, ~, SysPara, ~, ~, SysInfo, BTMSConfig] = expand_config(config);
 
-fig_name = sprintf('Configuration sys_ID: %i',sys_ID);
+fig_name = sprintf('Configuration sys_ID: %i, mod_ID: %i', sys_ID, mod_ID);
 
 %% Create figure
 figure1 = figure('Name',fig_name);
