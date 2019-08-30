@@ -1,26 +1,26 @@
-function results = sim_module(config)
+function results = sim_system(config)
 
-[~, mod_ID, SysSpec, BatPara, SysPara, ~, ~, ~, BTMSConfig] = expand_config(config);
+[sys_ID, ~, SysSpec, BatPara, SysPara, ~, ModInfo, SysInfo, BTMSConfig] = expand_config(config);
 
 
-%% Check if this module was already simulated during this run
+%% Check if this system was already simulated during this run
 
 % If yes: No simulation
 
-persistent mod_ID_tracker
+persistent sys_ID_tracker
 
-if isempty(mod_ID)
-    mod_ID_tracker = mod_ID;
+if isempty(sys_ID)
+    sys_ID_tracker = sys_ID;
 else
-    if isempty( mod_ID_tracker( mod_ID_tracker == mod_ID ) )
-        mod_ID_tracker = cat(2, mod_ID_tracker, mod_ID);
+    if isempty( sys_ID_tracker( sys_ID_tracker == sys_ID ) )
+        sys_ID_tracker = cat(2, sys_ID_tracker, sys_ID);
     else
         results = [];
         return
     end
 end
 
-fprintf('Starting module simulation of mod_ID %i\n', mod_ID);
+fprintf('Starting system simulation of sys_ID %i\n', sys_ID);
 
 
 %% Setting up the simulation (user input)
@@ -29,14 +29,26 @@ fprintf('Starting module simulation of mod_ID %i\n', mod_ID);
 % explanation of what all of this means
 
 SimPara.t_step               = 0.01;
-SimPara.t_sim                = 3*3600; 
+SimPara.t_sim                = 1; % TODO!! --> inf!
 SimPara.LoggingOutput        = true;
 SimPara.OutputDataType       = 'single';
 SimPara.OutputDecimation     = 100;
 SimPara.LoadSpectra_enable   = false;
 
-SysPara.I_charge_min   = 1;    % Stop charging when charging current drops below this value in A
-SysPara.SOC_charge_max = 1;    % Stop charging when any cell SOC in the battery system is over this value
+SysPara.I_charge_min   = 10;    % Stop charging when charging current drops below this value in A
+SysPara.SOC_charge_max = 1;     % Stop charging when any cell SOC in the battery system is over this value
+
+
+% All thermal resistances and heat transfer effects between the cells are
+% combined in a heat transfer coefficient alpha for each spacial direction.
+% Set so zero if there is no heat transfer in one or more spacial
+% directions.
+
+SysPara.thermal.transfer.alpha_x = 30;       % heat transfer coefficient between the cells in x-direction in W/(m^2*K)
+SysPara.thermal.transfer.alpha_y = 30;       % heat transfer coefficient between the cells in y-direction in W/(m^2*K)
+SysPara.thermal.transfer.alpha_z = 30;       % heat transfer coefficient between the cells in z-direction in W/(m^2*K)
+
+SysPara.thermal.transfer.alpha_mod_gap = 0;  % heat transfer coefficient between the cells in all direction between different modules in W/(m^2*K)
 
 
 % Worst-Case: No heat exchange of battery with environment
@@ -48,12 +60,27 @@ SysPara.thermal.alpha_cell_ambient = 0;
 
 %% Providing the system parameters for the simulation
 
-SysPara.p = SysPara.p_mod;
-SysPara.s = SysPara.s_mod;
+SysPara.p = SysPara.p_sys;
+SysPara.s = SysPara.s_sys;
 
-SysPara.I_charge = SysSpec.I_mod_max;
+SysPara.I_charge = SysSpec.I_sys_max;
 
 SysPara.DeviationMap = SysPara_DeviationMap(BatPara, SysPara.p, SysPara.s);
+
+
+%% Providing the thermal system parameters for simulation
+
+% Get position, spacial direction and heat transfer coefficient of gaps between modules
+% We assume the same value for all spacial directions and positions. 
+
+[SysPara.thermal.transfer.layer, SysPara.thermal.transfer.dir, SysPara.thermal.transfer.alpha] = special_heat_transfer_positons(SysPara.thermal.transfer.alpha_mod_gap, ModInfo, SysInfo);
+
+% Caluclate the heat transfer matrix
+
+SysPara.thermal.transfer.K_transfer = calc_heat_transfer_matrix(SysPara.pe_sys, SysPara.e_sys, SysPara.s_sys,...    % System interconnection info
+    SysPara.thermal.transfer.A_x, SysPara.thermal.transfer.A_y, SysPara.thermal.transfer.A_z,...                    % Heat conducting surfaces in all spacial directions
+    SysPara.thermal.transfer.alpha_x, SysPara.thermal.transfer.alpha_y, SysPara.thermal.transfer.alpha_z,...        % Heat transfer coefficients between cells in all spacial directions
+    SysPara.thermal.transfer.layer, SysPara.thermal.transfer.alpha, SysPara.thermal.transfer.dir);                  % Position, spacial direction and heat transfer coefficient of gaps between modules
 
 
 %% Initial State
@@ -84,10 +111,10 @@ SysPara.BatStateInit.thermal.T_cell    = ones(SysPara.p,SysPara.s) * 25;
 % We only want to simulation the electrical side so all thermal simulation
 % is deactivated
 
-SimPara.thermal_sim_enable   = false;
-SimPara.heat_exchange_enable = false;
+SimPara.thermal_sim_enable   = true;
+SimPara.heat_exchange_enable = true;
 SimPara.TempSensors_enable   = false;
-SimPara.BTMS_sim_enable      = false;
+SimPara.BTMS_sim_enable      = true;
 
 
 %% Remove incompatible fields
@@ -127,7 +154,8 @@ close_system(model)
 
 %% Clear unneeded variables
 
-results.mod_ID = mod_ID;
+results.sys_ID = sys_ID;
+
 results.SysPara = SysPara;
 results.I_cell = simOut.I_cell;
 results.I_load = simOut.I_load;
@@ -136,5 +164,10 @@ results.U_Pack = simOut.U_Pack;
 results.U_cell = simOut.U_cell;
 results.U_R = simOut.U_R;
 results.sum_U_RC = simOut.sum_U_RC;
+
+results.PQ_BTMS = simOut.PQ_ambient;
+results.PQ_transfer = simOut.PQ_transfer;
+results.T_cell = simOut.T_cell;
+results.T_BTMS_out = simOut.T_channel_out;
 
 end

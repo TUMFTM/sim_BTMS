@@ -12,20 +12,20 @@ U_max_cell = config.BatPara.electrical.U_max;
 
 %% Check for overload
 
-I_max_mod = max(max(max(res.I_cell)));
-SOC_max_mod = max(max(max(res.SOC)));
-SOC_min_mod = min(min(min(res.I_cell)));
-U_min_mod = min(min(min(res.I_cell)));
-U_max_mod = max(max(max(res.I_cell)));
+I_max_mod = max(max(max(res.I_cell.Data)));
+SOC_max_mod = max(max(max(res.SOC.Data)));
+SOC_min_mod = min(min(min(res.SOC.Data)));
+U_min_mod = min(min(min(res.U_cell.Data)));
+U_max_mod = max(max(max(res.U_cell.Data)));
 
 
 %% Create test matrix
 
 passed.I_max = false;
-passed.SOC_max = false;
-passed.SOC_min = false;
 passed.U_min = false;
 passed.U_max = false;
+passed.SOC_max = false;
+passed.SOC_min = false;
 
 if I_max_mod <= I_max_cell
     passed.I_max = true;
