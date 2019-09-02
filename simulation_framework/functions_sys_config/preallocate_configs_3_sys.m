@@ -6,5 +6,5 @@ configs.SysInfo = [];   % Infos about the system tests
 
 % Arrange field order (move 'sys_config_no' to first position)
 
-permutation_vec = [8 1 2 3 4 5 6 7 9];
+permutation_vec = [9 1 2 3 4 5 6 7 8 10];
 configs = orderfields(configs, permutation_vec);

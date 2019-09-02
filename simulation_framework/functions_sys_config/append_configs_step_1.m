@@ -13,6 +13,7 @@ else
 end
 
 configs(index).mod_ID = index;
+configs(index).cell_ID = BatPara.name;
 configs(index).BatPara = BatPara;
 configs(index).BTMSPara = BTMSPara;
 configs(index).SysPara = SysPara;
