@@ -12,20 +12,6 @@ clearvars
 close all
 clc
 
-% Add all relevant folders --> TODO in Simulink project
-
-addpath(genpath('battery_system_simulation'));  % Data of battery system simulation (refer to https://github.com/TUMFTM/sim_battery_system)
-% addpath(genpath('BTMS_simulation'));          % Data of BTMS simulation
-addpath(genpath('BTMS_simulation_results'));    % Folder with simulation results
-
-addpath(genpath('functions_sys_config'));                  % Functions and subroutines
-addpath(genpath('coolprop'));                   % CoolProp data used to obtain fluid characteristics
-
-addpath(genpath('functions_BTMS_sim'));         % Functions for BTMS setup and sim
-
-addpath(genpath('input_and_parameters'));       % Input data for the system configuration
-
-
 
 %% User Input: Cells and BTMS-method combinations in cosideration
 

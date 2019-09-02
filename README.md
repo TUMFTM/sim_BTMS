@@ -103,6 +103,8 @@ All cell, system, and BTMS data *currently included* in this release is for debu
 
 ### Basic steps
 
+ - Open *Sim_BTMS.prj* to add all relevant folders and subfolders to the path and to enable dependency analysis if you change or delete something.
+ 
  - All the individual steps get called from the script *main_sim_BTMS_1_system_setup.m* and also are documented there.
 
  - During the simulation some info is written to the command window. This looks like this (except): 
