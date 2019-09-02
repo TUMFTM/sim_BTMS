@@ -26,10 +26,10 @@ BatPara.cell_type = 'Cyl';      % Select either 'Pouch', 'Pris' or 'Cyl'
 
 run cell_parameters_NCR18650PF
 
-BatPara.electrical.C_A = 2.5;           % Overwrite original CA value. We want to have a Pouch-Cell with 10 Ah capacity
+BatPara.electrical.C_A = 2.5;          % Overwrite original CA value. We want to have a Pouch-Cell with 10 Ah capacity
 
 BatPara.electrical.U_max = 4.2;        % Maximum cell voltage in V IN THE LATER USE-CASE
-BatPara.electrical.U_min = 4.2;        % Minimum cell voltage in V IN THE LATER USE-CASE
+BatPara.electrical.U_min = 2.5;        % Minimum cell voltage in V IN THE LATER USE-CASE
 BatPara.electrical.U_nom = 3.6;        % Nominal cell voltage in V
 BatPara.electrical.I_max = 20;         % Maximum cell current in A
 
@@ -50,7 +50,7 @@ BatPara.physical.lambda = [26.04, 0.84, 0.84];   % Thermal conductivity in x-,y-
 
 BatPara.physical.dim_x = 18.3e-3;     % Cell dimension in x-direction
 BatPara.physical.dim_y = 18.3e-3;     % Cell dimension in y-direction
-BatPara.physical.dim_z = 64.85e-3;     % Cell dimension in z-direction
+BatPara.physical.dim_z = 64.85e-3;    % Cell dimension in z-direction
 
 % Cell mass (Calculated from the cell's dimensions and density)
 

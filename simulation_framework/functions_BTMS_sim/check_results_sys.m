@@ -46,11 +46,11 @@ if I_max_sys <= I_max_cell
 end
 
 if U_min_sys >= U_min_cell
-    passed.U_max = true;
+    passed.U_min = true;
 end
 
 if U_max_sys <= U_max_cell
-    passed.U_min = true;
+    passed.U_max = true;
 end
 
 if SOC_max_sys <= 1

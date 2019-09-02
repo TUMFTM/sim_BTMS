@@ -1,6 +1,6 @@
 function results = sim_system(config)
 
-[sys_ID, ~, SysSpec, BatPara, SysPara, ~, ModInfo, SysInfo, BTMSConfig] = expand_config(config);
+[sys_ID, mod_ID, SysSpec, BatPara, SysPara, ~, ModInfo, SysInfo, BTMSConfig] = expand_config(config);
 
 
 %% Check if this system was already simulated during this run
@@ -29,14 +29,14 @@ fprintf('Starting system simulation of sys_ID %i\n', sys_ID);
 % explanation of what all of this means
 
 SimPara.t_step               = 0.01;
-SimPara.t_sim                = 1; % TODO!! --> inf!
+SimPara.t_sim                = 3*3600;
 SimPara.LoggingOutput        = true;
 SimPara.OutputDataType       = 'single';
 SimPara.OutputDecimation     = 100;
 SimPara.LoadSpectra_enable   = false;
 
 SysPara.I_charge_min   = 10;    % Stop charging when charging current drops below this value in A
-SysPara.SOC_charge_max = 1;     % Stop charging when any cell SOC in the battery system is over this value
+SysPara.SOC_charge_max = 1;  % Stop charging when any cell SOC in the battery system is over this value
 
 
 % All thermal resistances and heat transfer effects between the cells are
@@ -64,6 +64,7 @@ SysPara.p = SysPara.p_sys;
 SysPara.s = SysPara.s_sys;
 
 SysPara.I_charge = SysSpec.I_sys_max;
+SysPara.U_charge_target = interp1(BatPara.electrical.OCV.SOC, BatPara.electrical.OCV.U, SysPara.SOC_charge_max, 'linear', 'extrap');
 
 SysPara.DeviationMap = SysPara_DeviationMap(BatPara, SysPara.p, SysPara.s);
 
@@ -155,6 +156,7 @@ close_system(model)
 %% Clear unneeded variables
 
 results.sys_ID = sys_ID;
+results.mod_ID = mod_ID;
 
 results.SysPara = SysPara;
 results.I_cell = simOut.I_cell;
@@ -162,12 +164,9 @@ results.I_load = simOut.I_load;
 results.SOC = simOut.SOC;
 results.U_Pack = simOut.U_Pack;
 results.U_cell = simOut.U_cell;
-results.U_R = simOut.U_R;
-results.sum_U_RC = simOut.sum_U_RC;
 
-results.PQ_BTMS = simOut.PQ_ambient;
-results.PQ_transfer = simOut.PQ_transfer;
 results.T_cell = simOut.T_cell;
-results.T_BTMS_out = simOut.T_channel_out;
+results.T_cell_gradient = simOut.T_cell_gradient;
+results.T_BTMS_out = simOut.T_BTMS_out;
 
 end

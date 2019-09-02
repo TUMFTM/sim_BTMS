@@ -28,8 +28,8 @@ run cell_parameters_NCR18650PF
 
 BatPara.electrical.C_A = 10;           % Overwrite original CA value. We want to have a Pouch-Cell with 10 Ah capacity
 
-BatPara.electrical.U_max = 4.2;        % Maximum cell voltage in V IN THE LATER USE-CASE
-BatPara.electrical.U_min = 4.2;        % Minimum cell voltage in V IN THE LATER USE-CASE
+BatPara.electrical.U_max = 4.2;       % Maximum cell voltage in V IN THE LATER USE-CASE
+BatPara.electrical.U_min = 2.5;        % Minimum cell voltage in V IN THE LATER USE-CASE
 BatPara.electrical.U_nom = 3.6;        % Nominal cell voltage in V
 BatPara.electrical.I_max = 10;         % Maximum cell current in A
 
@@ -41,8 +41,8 @@ BatPara.electrical.I_max = 10;         % Maximum cell current in A
 % the thermal parameters and the format of this model, but our own.
 
 BatPara.physical.rho = 2453;                      % Density [kg/m^3]
-BatPara.physical.c = 1066;                        % specific heat capacity [J/(kg*K)]
-BatPara.physical.lambda = [0.84, 26.05, 26.05];   % Thermal conductivity in x-,y-,z-dimension [W/(m*K)]
+BatPara.thermal.c = 1066;                        % specific heat capacity [J/(kg*K)]
+BatPara.thermal.lambda = [0.84, 26.05, 26.05];   % Thermal conductivity in x-,y-,z-dimension [W/(m*K)]
 
 % Cell dimensions. Note: For cylindrical cells two of those values must be
 % the same --> This will be considered as diameter. The diameter must be

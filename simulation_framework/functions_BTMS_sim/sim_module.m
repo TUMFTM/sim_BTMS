@@ -35,8 +35,8 @@ SimPara.OutputDataType       = 'single';
 SimPara.OutputDecimation     = 100;
 SimPara.LoadSpectra_enable   = false;
 
-SysPara.I_charge_min   = 1;    % Stop charging when charging current drops below this value in A
-SysPara.SOC_charge_max = 1;    % Stop charging when any cell SOC in the battery system is over this value
+SysPara.I_charge_min   = 5;    % Stop charging when charging current drops below this value in A
+SysPara.SOC_charge_max = 0.98;    % Stop charging when any cell SOC in the battery system is over this value
 
 
 % Worst-Case: No heat exchange of battery with environment
@@ -52,6 +52,8 @@ SysPara.p = SysPara.p_mod;
 SysPara.s = SysPara.s_mod;
 
 SysPara.I_charge = SysSpec.I_mod_max;
+SysPara.U_charge_target = interp1(BatPara.electrical.OCV.SOC, BatPara.electrical.OCV.U, SysPara.SOC_charge_max, 'linear', 'extrap');
+
 
 SysPara.DeviationMap = SysPara_DeviationMap(BatPara, SysPara.p, SysPara.s);
 
@@ -128,13 +130,12 @@ close_system(model)
 %% Clear unneeded variables
 
 results.mod_ID = mod_ID;
+
 results.SysPara = SysPara;
 results.I_cell = simOut.I_cell;
 results.I_load = simOut.I_load;
 results.SOC = simOut.SOC;
 results.U_Pack = simOut.U_Pack;
 results.U_cell = simOut.U_cell;
-results.U_R = simOut.U_R;
-results.sum_U_RC = simOut.sum_U_RC;
 
 end

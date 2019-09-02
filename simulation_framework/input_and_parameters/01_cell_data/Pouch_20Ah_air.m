@@ -29,7 +29,7 @@ run cell_parameters_NCR18650PF
 BatPara.electrical.C_A = 20;           % Overwrite original CA value. We want to have a Pouch-Cell with 10 Ah capacity
 
 BatPara.electrical.U_max = 4.2;        % Maximum cell voltage in V IN THE LATER USE-CASE
-BatPara.electrical.U_min = 4.2;        % Minimum cell voltage in V IN THE LATER USE-CASE
+BatPara.electrical.U_min = 2.5;        % Minimum cell voltage in V IN THE LATER USE-CASE
 BatPara.electrical.U_nom = 3.6;        % Nominal cell voltage in V
 BatPara.electrical.I_max = 10;         % Maximum cell current in A
 

@@ -7,6 +7,7 @@
 
 %% Initialization
 
+clearvars
 close all
 clc
 
@@ -64,9 +65,6 @@ clear sim_module % Clear persistent variable
 if modes.sim_module == true
     
     load(config_file_mod_sim)
-    
-    t_count_res_passed = 1;
-    t_count_res_failed = 1;
 
     for ii = 1:1:size(configs_6_BTMS_passed, 2)
 
@@ -76,25 +74,24 @@ if modes.sim_module == true
         
         if isempty(results) == false
         
-            [results, passed_mod_el] = check_results_mod(results, config);  
+            [results, passed_mod] = check_results_mod(results, config);  
 
-            if check_for_failed_tests(passed_mod_el)
+            if check_for_failed_tests(passed_mod)
                 
-                results_mod_failed(t_count_res_failed) = results;
-                t_count_res_failed = t_count_res_failed + 1;
+                save_sim_result(results, passed_mod, 'results_7', 'mod', 'failed')
                 fprintf('Warning: The module with mod_ID %i failed the electrical tests and should be excluded from further consideration.\n\n', results.mod_ID)
                 
             else
                 
-                results_mod_passed(t_count_res_passed) = results;
-                t_count_res_passed = t_count_res_passed + 1;
+                save_sim_result(results, passed_mod, 'results_7', 'mod', 'passed')
                 
             end
         end
     end
     
-    clearvars results config t_* SimPara ii
-    save('BTMS_simulation_results\configs_7_mod_sim', 'results_*')  % Save results of this run in a MAT-File
+    disp('Module simulation finished.')
+    clearvars results config t_* SimPara ii passed_mod
+    
 end
 
 
@@ -105,10 +102,6 @@ clear sim_system % Clear persistent variable
 if modes.sim_sys == true
     
     load(config_file_sys_sim)
-    clearvars results_mod_failed
-    
-    t_count_res_passed = 1;
-    t_count_res_failed = 1;
 
     for ii = 1:1:size(configs_6_BTMS_passed, 2)
 
@@ -118,23 +111,25 @@ if modes.sim_sys == true
         
         if isempty(results) == false
         
-            [results, passed_sys_el] = check_results_sys(results, config);  
+            [results, passed_sys] = check_results_sys(results, config);  
 
-            if check_for_failed_tests(passed_sys_el)
+            if check_for_failed_tests(passed_sys)
                 
-                results_sys_failed(t_count_res_failed) = results;
-                t_count_res_failed = t_count_res_failed + 1;
+                save_sim_result(results, passed_sys, 'results_8', 'sys', 'failed')
                 fprintf('Warning: The system with sys_ID %i failed the electrical tests and should be excluded from further consideration.\n\n', results.sys_ID)
                 
             else
                 
-                results_sys_passed(t_count_res_passed) = results;
-                t_count_res_passed = t_count_res_passed + 1;
+                
+                save_sim_result(results, passed_sys, 'results_8', 'sys', 'passed')
                 
             end
         end
     end
     
-    clearvars results config t_* SimPara ii
-    save('BTMS_simulation_results\configs_8_sys_sim', 'results_*')  % Save all possible configurations of this run in a MAT-File
+    disp('System simulation finished.')
+    clearvars results config t_* SimPara ii passed_sys
+    
 end
+
+clearvars config_* modes

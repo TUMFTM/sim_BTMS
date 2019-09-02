@@ -97,7 +97,7 @@ BTMSPara.enable_sys_bottom = true;
 % Fluid flow along x-dim of battery system.
 % This only affects the top layer of modules in the battery system.
 
-BTMSPara.enable_sys_top = true;
+BTMSPara.enable_sys_top = false;
 
 
 %% System-level: Cooling of left/right of battery system
@@ -115,7 +115,7 @@ BTMSPara.enable_sys_leftright = true;
 % Fluid flow along x-dim of battery system.
 % This only affects the outer left and right modules.
 
-BTMSPara.enable_sys_frontback = true;
+BTMSPara.enable_sys_frontback = false;
 
 
 %% System-level: Cooling between the modules in the spacial directions
@@ -124,17 +124,17 @@ BTMSPara.enable_sys_frontback = true;
 
 % Fluid flow perpendicular to x-dim of battery system.
 
-BTMSPara.enable_sys_inside_x = false;
+BTMSPara.enable_sys_inside_x = true;
 
 
 % Fluid flow perpendicular to y-dim of battery system.
 
-BTMSPara.enable_sys_inside_y = false;
+BTMSPara.enable_sys_inside_y = true;
 
 
 % Fluid flow perpendicular to z-dim of battery system
 
-BTMSPara.enable_sys_inside_z = false;
+BTMSPara.enable_sys_inside_z = true;
 
 
 
