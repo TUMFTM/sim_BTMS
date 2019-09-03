@@ -16,7 +16,7 @@ if strcmp(sys_lvl, 'sys')
     sys_ID          = results.sys_ID;
     T_cell          = results.T_cell;
     T_cell_gradient = results.T_cell_gradient;
-    T_BTMS_out      = results.T_BTMS_out;
+    T_BTMS_out_max  = results.T_BTMS_out_max;
 end
 
 

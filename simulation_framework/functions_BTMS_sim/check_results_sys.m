@@ -25,9 +25,9 @@ U_max_sys = max(max(max(res.U_cell.Data)));
 
 %% Check for overload (thermal)
 
-T_max_sys       = max(max(max(res.T_cell.Data)));
-T_grad_max_sys  = 0; % TODO!
-T_fluid_out_sys = max(max(max(res.T_BTMS_out.Data)));
+T_max_sys      = max(max(max(res.T_cell.Data)));
+T_grad_max_sys = max(max(max(res.T_cell_gradient.Data)));
+T_BTMS_out_max = max(max(max(res.T_BTMS_out_max.Data)));
 
 
 %% Create test matrix
@@ -40,6 +40,9 @@ passed.U_min = false;
 passed.U_max = false;
 passed.U_max = false;
 passed.U_max = false;
+passed.T_BTMS_out_max = false;
+passed.T_max = false;
+passed.T_grad_max = false;
 
 if I_max_sys <= I_max_cell
     passed.I_max = true;
@@ -62,15 +65,15 @@ if SOC_min_sys >= 0
 end
 
 if T_grad_max_sys <= T_grad_max
-    passed.T_grad_max = true;
+    passed.T_BTMS_out_max = true;
 end
 
 if T_max_sys <= T_max
     passed.T_max = true;
 end
 
-if T_fluid_out_sys <= T_fluid_out_max
-    passed.T_fluid_out_max = true;
+if T_BTMS_out_max <= T_fluid_out_max
+    passed.T_grad_max = true;
 end
 
 
@@ -82,9 +85,9 @@ res.Tests_sys.SOC_min = passed.SOC_min;
 res.Tests_sys.U_min   = passed.U_min;
 res.Tests_sys.U_max   = passed.U_max;
 
-res.Tests_sys.T_grad_max      = passed.T_grad_max;
-res.Tests_sys.T_max           = passed.T_max;
-res.Tests_sys.T_fluid_out_max = passed.T_fluid_out_max;
+res.Tests_sys.T_BTMS_out_max = passed.T_grad_max;
+res.Tests_sys.T_max          = passed.T_max;
+res.Tests_sys.T_grad_max     = passed.T_BTMS_out_max;
 
 
 end

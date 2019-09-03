@@ -14,12 +14,12 @@ clc
 
 %% User Input: Select simulation modes
 
-modes.plot_sys = true;        % Plot the system configuration
+modes.plot_sys = false;        % Plot the system configuration
 modes.sim_module = false;      % Electrical simulation of modules
-modes.sim_sys = false;        % Electrical an thermal simulation of the whole system
+modes.sim_sys = true;        % Electrical an thermal simulation of the whole system
 
-config_file_mod_sim = 'configs_6_BTMS_passed';   % Select the mat-File with the configs for module simulation
-config_file_sys_sim = 'configs_6_BTMS_passed';   % Select the mat-File with the configs for module simulation
+config_file_mod_sim = 'configs_6_BTMS_passed_system_simulation';   % Select the mat-File with the configs for module simulation
+config_file_sys_sim = 'configs_6_BTMS_passed_system_simulation';   % Select the mat-File with the configs for module simulation
 
 % Note: The steps above will be performed for all configs in the provided
 % mat-file and therefore may take a long time!
@@ -106,7 +106,6 @@ if modes.sim_sys == true
                 fprintf('Warning: The system with sys_ID %i failed the electrical tests and should be excluded from further consideration.\n\n', results.sys_ID)
                 
             else
-                
                 
                 save_sim_result(results, passed_sys, 'results_8', 'sys', 'passed')
                 

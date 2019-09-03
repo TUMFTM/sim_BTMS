@@ -67,6 +67,8 @@ SysSpec.sf_dim_sys      = 0.05; % Safety factor (range 0-1) to account for addit
 SysSpec.sf_dim_mod      = 0.05; % Safety factor (range 0-1) to account for additional space need in the modules (e.g. additional components or air gaps)
 SysSpec.sf_mass_sys     = 0.1;  % Safety factor (range 0-1) to account for additional mass of the battery system (e.g. additional components or structure)
 SysSpec.sf_mass_mod     = 0.1;  % Safety factor (range 0-1) to account for additional mass of the modules (e.g. additional components or structure)
+SysSpec.sf_parallel     = 0.1;  % Safety factor (range 0-1) for design of parallel interconnection for max current (e.g. 0.1 designs the parallel connection for a 10% higher max. current as theoretically needed)
+
 
 
 %% Thermal constraints

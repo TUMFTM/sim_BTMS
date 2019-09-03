@@ -141,5 +141,5 @@ BatPara.variances.electrical.R1  = 0;
 BatPara.variances.electrical.C1  = 0;
 
 BatPara.variances.physical.m       = 0;
-BatPara.variances.thermal.c        = 0.01;
+BatPara.variances.thermal.c        = 0;
 BatPara.variances.thermal.EnCo     = 0;

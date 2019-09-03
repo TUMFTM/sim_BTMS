@@ -11,10 +11,10 @@ function [config, passed] = sys_test_energy(config)
 % Module data
 
 C_mod     = config.ModInfo.C_mod;       % Module capacity in Ah
-U_nom_mod = config.ModInfo.U_nom_mod;   % Nominal module voltage in Ah
+U_nom_mod = config.ModInfo.U_nom_mod;   % Nominal module voltage in V
 
-U_min_mod = config.ModInfo.U_min_mod;   % Minimum module voltage in Ah
-U_max_mod = config.ModInfo.U_max_mod;   % Maximum module voltage in Ah
+U_min_mod = config.ModInfo.U_min_mod;   % Minimum module voltage in V
+U_max_mod = config.ModInfo.U_max_mod;   % Maximum module voltage in V
 
 
 % Electrical pack connection data
@@ -31,8 +31,8 @@ U_nom_sys = U_nom_mod * s;          % Nominal module voltage in V
 
 E_sys = C_sys * U_nom_sys * 1e-3;   % Module energy in kWh
 
-U_min_sys = U_min_mod * s;         % Minimum module voltage in V
-U_max_sys = U_max_mod * s;         % Maximum module voltage in V
+U_min_sys = U_min_mod * s;          % Minimum module voltage in V
+U_max_sys = U_max_mod * s;          % Maximum module voltage in V
 
 
 

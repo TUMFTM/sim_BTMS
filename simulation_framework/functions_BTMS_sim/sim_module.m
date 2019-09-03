@@ -64,10 +64,7 @@ SysPara.DeviationMap = SysPara_DeviationMap(BatPara, SysPara.p, SysPara.s);
 % 'ones(BatSys.p,BatSys.s)'). This allows the adaption to measurement data or to induce
 % initial load imbalances or thermal gradients.
 
-% In our example, there is a inbalance of SOC, represented as a normal
-% distribution randn(BatSys.p,BatSys.s).
-
-SysPara.BatStateInit.electrical.SOC    = ones(SysPara.p,SysPara.s) * 0;  
+SysPara.BatStateInit.electrical.SOC    = ones(SysPara.p,SysPara.s) * 0.05;  
 SysPara.BatStateInit.electrical.U_hyst = ones(SysPara.p,SysPara.s) * 0;
 SysPara.BatStateInit.electrical.U_RC1  = ones(SysPara.p,SysPara.s) * 0;
 SysPara.BatStateInit.electrical.U_RC2  = ones(SysPara.p,SysPara.s) * 0;

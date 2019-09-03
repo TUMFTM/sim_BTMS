@@ -32,11 +32,11 @@ SimPara.t_step               = 0.01;
 SimPara.t_sim                = 3*3600;
 SimPara.LoggingOutput        = true;
 SimPara.OutputDataType       = 'single';
-SimPara.OutputDecimation     = 100;
+SimPara.OutputDecimation     = 1000;
 SimPara.LoadSpectra_enable   = false;
 
 SysPara.I_charge_min   = 10;    % Stop charging when charging current drops below this value in A
-SysPara.SOC_charge_max = 1;  % Stop charging when any cell SOC in the battery system is over this value
+SysPara.SOC_charge_max = 1;     % Stop charging when any cell SOC in the battery system is over this value
 
 
 % All thermal resistances and heat transfer effects between the cells are
@@ -58,6 +58,15 @@ SysPara.thermal.T_cell_ambient = 25;
 SysPara.thermal.alpha_cell_ambient = 0;
 
 
+%% Optional: Overwrite parameter deviations
+
+% Use this option to set parameter deviation to zero. This allows you to
+% compare the influence of different BTMS architectures without any other
+% influences.
+
+overwrite_parameter_dev = true;
+
+
 %% Providing the system parameters for the simulation
 
 SysPara.p = SysPara.p_sys;
@@ -65,6 +74,12 @@ SysPara.s = SysPara.s_sys;
 
 SysPara.I_charge = SysSpec.I_sys_max;
 SysPara.U_charge_target = interp1(BatPara.electrical.OCV.SOC, BatPara.electrical.OCV.U, SysPara.SOC_charge_max, 'linear', 'extrap');
+
+if overwrite_parameter_dev
+    BatPara.variances.electrical.C_A = 0;
+    BatPara.variances.electrical.R_0 = 0;
+    BatPara.variances.thermal.c      = 0;
+end
 
 SysPara.DeviationMap = SysPara_DeviationMap(BatPara, SysPara.p, SysPara.s);
 
@@ -93,7 +108,7 @@ SysPara.thermal.transfer.K_transfer = calc_heat_transfer_matrix(SysPara.pe_sys, 
 % In our example, there is a inbalance of SOC, represented as a normal
 % distribution randn(BatSys.p,BatSys.s).
 
-SysPara.BatStateInit.electrical.SOC    = ones(SysPara.p,SysPara.s) * 0;  
+SysPara.BatStateInit.electrical.SOC    = ones(SysPara.p,SysPara.s) *  0.05;  
 SysPara.BatStateInit.electrical.U_hyst = ones(SysPara.p,SysPara.s) * 0;
 SysPara.BatStateInit.electrical.U_RC1  = ones(SysPara.p,SysPara.s) * 0;
 SysPara.BatStateInit.electrical.U_RC2  = ones(SysPara.p,SysPara.s) * 0;
@@ -167,6 +182,6 @@ results.U_cell = simOut.U_cell;
 
 results.T_cell = simOut.T_cell;
 results.T_cell_gradient = simOut.T_cell_gradient;
-results.T_BTMS_out = simOut.T_BTMS_out;
+results.T_BTMS_out_max = simOut.T_BTMS_out_max;
 
 end
