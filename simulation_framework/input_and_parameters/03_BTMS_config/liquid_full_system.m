@@ -59,12 +59,12 @@ BTMSPara.ref_pressure   = 101325;               % Reference pressure in Pa
 
 BTMSPara.FluidType      = 'INCOMP::MEG-50%';    % Specify fluid type for CoolProp (see: http://www.coolprop.org/) (Water with 50% ethylenglycol)
 
-BTMSPara.lambda_wall = 400;                     % Thermal conductivity of the material of the cooling installation in W/m*K (copper)
-BTMSPara.wt          = 0.00015;                 % Wall thickness of the cooling installation in m
+BTMSPara.lambda_wall    = 236;                  % Thermal conductivity of the material of the cooling installation in W/m*K (copper)
+BTMSPara.wt             = 0.00015;              % Wall thickness of the cooling installation in m
 
-BTMSPara.ch_width = 0.003;                      % Width of cooling channels in m
-BTMSPara.ch_ratio_sys = 0.95;                   % Ratio of channel size relative to x,y or z dimensions of battery system
-BTMSPara.ch_ratio_cell = 0.90;                  % Ratio of channel size relative to x,y or z dimensions of battery system
+BTMSPara.ch_width       = 0.003;                % Width of cooling channels in m
+BTMSPara.ch_ratio_sys   = 0.95;                 % Ratio of channel size relative to x,y or z dimensions of battery system
+BTMSPara.ch_ratio_cell  = 0.90;                 % Ratio of channel size relative to x,y or z dimensions of battery system
 
 
 %% Natural convection around cells
@@ -97,7 +97,7 @@ BTMSPara.enable_sys_bottom = true;
 % Fluid flow along x-dim of battery system.
 % This only affects the top layer of modules in the battery system.
 
-BTMSPara.enable_sys_top = false;
+BTMSPara.enable_sys_top = true;
 
 
 %% System-level: Cooling of left/right of battery system
@@ -115,7 +115,7 @@ BTMSPara.enable_sys_leftright = true;
 % Fluid flow along x-dim of battery system.
 % This only affects the outer left and right modules.
 
-BTMSPara.enable_sys_frontback = false;
+BTMSPara.enable_sys_frontback = true;
 
 
 %% System-level: Cooling between the modules in the spacial directions

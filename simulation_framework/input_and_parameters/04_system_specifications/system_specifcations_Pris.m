@@ -17,7 +17,7 @@ SysSpec.name = mfilename;         % Get config name from filename (for better ov
 
 
 SysSpec.num_higher_p_mod = 2;     % Not only look for one parallel cell connection for each module, but also consider up t0 p+n --> More e*pe-distributions will be found.
-SysSpec.num_higher_p_sys = 1;     % Not only look for one parallel module connection for each system, but also consider up t0 p+n --> More e*pe-distributions will be found. Note that this will potentially massivey overdimension your system!
+SysSpec.num_higher_p_sys = 0;     % Not only look for one parallel module connection for each system, but also consider up t0 p+n --> More e*pe-distributions will be found. Note that this will potentially massivey overdimension your system!
 
 
 %% Electric battery system parameters
@@ -25,18 +25,18 @@ SysSpec.num_higher_p_sys = 1;     % Not only look for one parallel module connec
 % Module level
 
 SysSpec.U_mod_nom   = 48;       % Nominal module voltage in V
-SysSpec.C_mod_min   = 200;      % Minimum module capacity in Ah
-SysSpec.E_mod_min   = 10;       % Minimum module energy in kWh
-SysSpec.I_mod_max   = 50;       % Maximum continuous current the module must withstand in A
+SysSpec.C_mod_min   = 190;      % Minimum module capacity in Ah
+SysSpec.E_mod_min   = 0;        % Minimum module energy in kWh
+SysSpec.I_mod_max   = 375;      % Maximum continuous current the module must withstand in A
 SysSpec.s_mod_max   = inf;      % Hard limit for serially connected cells per Module (may e.g. be implied by BMS hardware)
 
 
-% System Level
+% System Level (Pris: Only simulate one branch)
 
-SysSpec.I_sys_max   = 100;     % Maximum continuous current the system must withstand in A
-SysSpec.U_sys_nom   = 150;     % Nominal voltage of battery system
-SysSpec.C_sys_min   = 400;     % Minimum system capacity in Ah
-SysSpec.E_sys_min   = 85;      % Minimum system energy in kWh
+SysSpec.I_sys_max   = 375;      % Maximum continuous current the system must withstand in A
+SysSpec.U_sys_nom   = 450/2;    % Nominal voltage of battery system
+SysSpec.C_sys_min   = 190;      % Minimum system capacity in Ah
+SysSpec.E_sys_min   = 85/2;     % Minimum system energy in kWh
 
 
 
@@ -46,18 +46,18 @@ SysSpec.E_sys_min   = 85;      % Minimum system energy in kWh
 
 SysSpec.m_mod_max   = 75;           % Maximum module mass in kg
 
-SysSpec.dim_x_mod_max   = 1.0;      % Maximum module dimension in x-direction in m
-SysSpec.dim_y_mod_max   = 0.5;      % Maximum module dimension in y-direction in m
-SysSpec.dim_z_mod_max   = 0.4;      % Maximum module dimension in z-direction in m
+SysSpec.dim_x_mod_max   = 1.1;      % Maximum module dimension in x-direction in m
+SysSpec.dim_y_mod_max   = 1.7;      % Maximum module dimension in y-direction in m
+SysSpec.dim_z_mod_max   = 0.2;      % Maximum module dimension in z-direction in m
 
 
 % System level
 
 SysSpec.m_sys_max   = 1500;         % Maximum module mass in kg
 
-SysSpec.dim_x_sys_max   = 2.7;      % Maximum system dimension in x-direction in m
-SysSpec.dim_y_sys_max   = 1.53;     % Maximum system dimension in y-direction in m
-SysSpec.dim_z_sys_max   = 0.50;     % Maximum system dimension in z-direction in m
+SysSpec.dim_x_sys_max   = 3.0;      % Maximum system dimension in x-direction in m
+SysSpec.dim_y_sys_max   = 1.7;      % Maximum system dimension in y-direction in m
+SysSpec.dim_z_sys_max   = 0.2;      % Maximum system dimension in z-direction in m
 
 
 

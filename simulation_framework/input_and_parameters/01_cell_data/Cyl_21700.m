@@ -55,8 +55,8 @@ BatPara.physical.c = 696.07;        % specific heat capacity [J/(kg*K)]
 % the same --> This will be considered as diameter. The diameter must be
 % identical or smaller as the length!
 
-BatPara.physical.dim_x = 70e-3;     % Cell dimension in x-direction
-BatPara.physical.dim_y = 21e-3;     % Cell dimension in y-direction
+BatPara.physical.dim_x = 21e-3;     % Cell dimension in x-direction
+BatPara.physical.dim_y = 70e-3;     % Cell dimension in y-direction
 BatPara.physical.dim_z = 21e-3;     % Cell dimension in z-direction
 
 % Cell mass (Calculated from the cell's dimensions and density)

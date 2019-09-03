@@ -29,14 +29,38 @@ clc
 % system configuration. The input data should be saved in
 % 'input_and_parameters/01_cell_data', '/02_BTMS_configs' and '/03_system_data', respectively.
 
-input_configs = {
-    'Pouch_10Ah_air', 'system_para_BTMS_sim', 'liquid_Pouch'; ...
-    'Cyl_2500mAh_air', 'system_para_BTMS_sim', 'liquid_Pouch'; ...
-    'Pouch_20Ah_air', 'system_para_BTMS_sim', 'liquid_Pouch'};
+% Cylindric and Pouch
 
-% Provide the required system specification
+% input_configs = {
+%     'Cyl_18650',  'system_para_BTMS_sim', 'liquid_bottom'; ...
+%     'Cyl_21700',  'system_para_BTMS_sim', 'liquid_bottom'; ...
+%     'Pouch_74Ah', 'system_para_BTMS_sim', 'liquid_bottom'; ...
+%     'Cyl_18650',  'system_para_BTMS_sim', 'liquid_bottom_xdir'; ...
+%     'Cyl_21700',  'system_para_BTMS_sim', 'liquid_bottom_xdir'; ...
+%     'Pouch_74Ah', 'system_para_BTMS_sim', 'liquid_bottom_xdir'; ...
+%     'Cyl_18650',  'system_para_BTMS_sim', 'liquid_full_system'; ...
+%     'Cyl_21700',  'system_para_BTMS_sim', 'liquid_full_system'; ...
+%     'Pouch_74Ah', 'system_para_BTMS_sim', 'liquid_full_system'; ...
+%     };
+% 
+% % Provide the requested system specification
+% run input_and_parameters\04_system_specifications\system_specifcations_cyl_Pouch.m;
 
-run input_and_parameters\04_system_specifications\system_specifcations.m;
+% Prismatic
+
+input_configs = {    
+    'Pris_BEV2',  'system_para_BTMS_sim', 'liquid_bottom'; ...
+    'Pris_PHEV2', 'system_para_BTMS_sim', 'liquid_bottom'; ...   
+    'Pris_BEV2',  'system_para_BTMS_sim', 'liquid_bottom_xdir'; ...
+    'Pris_PHEV2', 'system_para_BTMS_sim', 'liquid_bottom_xdir'; ...   
+    'Pris_BEV2',  'system_para_BTMS_sim', 'liquid_full_system'; ...
+    'Pris_PHEV2', 'system_para_BTMS_sim', 'liquid_full_system'; ...
+    };
+
+% Provide the requested system specification
+run input_and_parameters\04_system_specifications\system_specifcations_Pris.m;
+
+
 
 
 
@@ -81,9 +105,9 @@ for ii = 1:size(input_configs, 1)
     % Determine min size of parallel connection
     
     % This is either defined by the max. individual cell current and the 
-    % requested fast-charging capability or the module capacity.
+    % requested fast-charging capability (including 10% safety) or the module capacity.
     
-    p_min_mod = max(ceil(SysSpec.I_mod_max / BatPara.electrical.I_max), ceil(SysSpec.C_mod_min / BatPara.electrical.C_A));
+    p_min_mod = max(ceil(SysSpec.I_mod_max * 1.1 / BatPara.electrical.I_max), ceil(SysSpec.C_mod_min / BatPara.electrical.C_A));
    
     
     % Spatial arrangement of the parallel connection

@@ -35,8 +35,8 @@ SimPara.OutputDataType       = 'single';
 SimPara.OutputDecimation     = 100;
 SimPara.LoadSpectra_enable   = false;
 
-SysPara.I_charge_min   = 5;    % Stop charging when charging current drops below this value in A
-SysPara.SOC_charge_max = 0.98;    % Stop charging when any cell SOC in the battery system is over this value
+SysPara.I_charge_min   = 10;        % Stop charging when charging current drops below this value in A
+SysPara.SOC_charge_max = 0.98;      % Stop charging when any cell SOC in the battery system is over this value
 
 
 % Worst-Case: No heat exchange of battery with environment

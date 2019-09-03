@@ -14,9 +14,9 @@ clc
 
 %% User Input: Select simulation modes
 
-modes.plot_sys = false;        % Plot the system configuration
+modes.plot_sys = true;        % Plot the system configuration
 modes.sim_module = false;      % Electrical simulation of modules
-modes.sim_sys = true;          % Electrical an thermal simulation of the whole system
+modes.sim_sys = false;        % Electrical an thermal simulation of the whole system
 
 config_file_mod_sim = 'configs_6_BTMS_passed';   % Select the mat-File with the configs for module simulation
 config_file_sys_sim = 'configs_6_BTMS_passed';   % Select the mat-File with the configs for module simulation
