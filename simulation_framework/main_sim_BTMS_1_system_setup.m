@@ -395,6 +395,7 @@ for ii = 1:1:size(configs_4_sys_passed, 2)
     % Determine BTMS architecture
 
     config.BTMSConfig = main_create_BTMS_config(config.BTMSPara, config.SysPara, config.SysInfo, config.ModInfo);
+    config.BTMS_ID = config.BTMSPara.name;
     
     % Calculate thermal system properties depending on module and BTMS config
     
