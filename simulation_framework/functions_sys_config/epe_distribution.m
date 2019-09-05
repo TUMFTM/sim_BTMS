@@ -1,4 +1,4 @@
-function [epe] = epe_distribution(p_in, num_higher_p)
+function [epe] = epe_distribution(p_in, num_higher_p, min_e, max_e)
 
 % This function determine the e*pe connection for a number of p cells/modules
 % connected in parallel. The connection is chosen in such a way that the
@@ -41,4 +41,25 @@ for ii = 1:1:length(p_in)
     epe(ii).p  = p_in(ii);
     epe(ii).pe = flip(divisors_p);
     epe(ii).e  = divisors_p;
+    
+    % Remove configs violating the max/min layers condition 
+    epe(ii) = rem_layer_violation(epe(ii), min_e, max_e);
+    
+end
+
+end
+
+function epe_out = rem_layer_violation(epe, min_e, max_e)
+
+    min_violation = epe.e < min_e;
+    max_violation = epe.e > max_e;
+    violation = logical(double(min_violation) + double(max_violation));
+    
+    if sum(violation) > 0
+        epe.pe(violation) = [];
+        epe.e(violation) = [];
+    end
+    
+    epe_out = epe;
+
 end
