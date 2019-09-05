@@ -18,8 +18,8 @@ modes.plot_sys = false;        % Plot the system configuration
 modes.sim_module = false;      % Electrical simulation of modules
 modes.sim_sys = true;        % Electrical an thermal simulation of the whole system
 
-config_file_mod_sim = 'configs_6_BTMS_passed_system_simulation';   % Select the mat-File with the configs for module simulation
-config_file_sys_sim = 'configs_6_BTMS_passed_system_simulation';   % Select the mat-File with the configs for module simulation
+config_file_mod_sim = 'configs_6_BTMS_passed_system_simulation_Pouch_inside_cooling';   % Select the mat-File with the configs for module simulation
+config_file_sys_sim = 'configs_6_BTMS_passed_system_simulation_Pouch_inside_cooling';   % Select the mat-File with the configs for module simulation
 
 % Note: The steps above will be performed for all configs in the provided
 % mat-file and therefore may take a long time!
