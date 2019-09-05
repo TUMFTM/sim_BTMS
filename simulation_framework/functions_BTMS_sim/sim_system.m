@@ -44,11 +44,11 @@ SysPara.SOC_charge_max = 1;     % Stop charging when any cell SOC in the battery
 % Set so zero if there is no heat transfer in one or more spacial
 % directions.
 
-SysPara.thermal.transfer.alpha_x = 5;       % thermal transmittance between the cells in x-direction in W/(m^2*K)
-SysPara.thermal.transfer.alpha_y = 5;       % thermal transmittance between the cells in y-direction in W/(m^2*K)
-SysPara.thermal.transfer.alpha_z = 5;       % thermal transmittance between the cells in z-direction in W/(m^2*K)
+SysPara.thermal.transfer.alpha_x = 1000;       % thermal transmittance between the cells in x-direction in W/(m^2*K)
+SysPara.thermal.transfer.alpha_y = 1000;       % thermal transmittance between the cells in y-direction in W/(m^2*K)
+SysPara.thermal.transfer.alpha_z = 1000;       % thermal transmittance between the cells in z-direction in W/(m^2*K)
 
-SysPara.thermal.transfer.alpha_mod_gap = 1;  % heat transfer coefficient between the cells in all direction between different modules in W/(m^2*K)
+SysPara.thermal.transfer.alpha_mod_gap = 100;  % heat transfer coefficient between the cells in all direction between different modules in W/(m^2*K)
 
 
 % Worst-Case: No heat exchange of battery with environment

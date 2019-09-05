@@ -30,22 +30,22 @@ clc
 % 'input_and_parameters/01_cell_data', '/02_BTMS_configs' and '/03_system_data', respectively.
 
 
-% Cylindric and Pouch
-
-input_configs = {
-    'Cyl_18650',  'system_para_BTMS_sim', 'liquid_bottom'; ...
-    'Cyl_21700',  'system_para_BTMS_sim', 'liquid_bottom'; ...
-    'Pouch_74Ah', 'system_para_BTMS_sim', 'liquid_bottom'; ...
-    'Cyl_18650',  'system_para_BTMS_sim', 'liquid_bottom_xdir'; ...
-    'Cyl_21700',  'system_para_BTMS_sim', 'liquid_bottom_xdir'; ...
-    'Pouch_74Ah', 'system_para_BTMS_sim', 'liquid_bottom_xdir'; ...
-    'Cyl_18650',  'system_para_BTMS_sim', 'liquid_full_system'; ...
-    'Cyl_21700',  'system_para_BTMS_sim', 'liquid_full_system'; ...
-    'Pouch_74Ah', 'system_para_BTMS_sim', 'liquid_full_system'; ...
-    };
-
-% Provide the requested system specification
-run input_and_parameters\04_system_specifications\system_specifcations_cyl_Pouch.m;
+% % Cylindric and Pouch
+% 
+% input_configs = {
+%     'Cyl_18650',  'system_para_BTMS_sim', 'liquid_bottom'; ...
+%     'Cyl_21700',  'system_para_BTMS_sim', 'liquid_bottom'; ...
+%     'Pouch_74Ah', 'system_para_BTMS_sim', 'liquid_bottom'; ...
+%     'Cyl_18650',  'system_para_BTMS_sim', 'liquid_bottom_xdir'; ...
+%     'Cyl_21700',  'system_para_BTMS_sim', 'liquid_bottom_xdir'; ...
+%     'Pouch_74Ah', 'system_para_BTMS_sim', 'liquid_bottom_xdir'; ...
+%     'Cyl_18650',  'system_para_BTMS_sim', 'liquid_full_system'; ...
+%     'Cyl_21700',  'system_para_BTMS_sim', 'liquid_full_system'; ...
+%     'Pouch_74Ah', 'system_para_BTMS_sim', 'liquid_full_system'; ...
+%     };
+% 
+% % Provide the requested system specification
+% run input_and_parameters\04_system_specifications\system_specifcations_cyl_Pouch.m;
 
 
 % % Prismatic (PHEV2)
@@ -74,6 +74,31 @@ run input_and_parameters\04_system_specifications\system_specifcations_cyl_Pouch
 % 
 % % Provide the requested system specification
 % run input_and_parameters\04_system_specifications\system_specifcations_Pris_BEV2.m;
+
+
+% % Cylindric (inside cooling)
+% 
+% % Module simulation with cooing inside the module
+% 
+% input_configs = {
+%     'Cyl_18650',  'system_para_BTMS_sim', 'liquid_inside_18650'; ...
+%     'Cyl_21700',  'system_para_BTMS_sim', 'liquid_inside_21700'; ...
+%     };
+% 
+% % Provide the requested system specification
+% run input_and_parameters\04_system_specifications\system_specifcations_cyl_inside.m;
+
+
+% Pouch (inside cooling)
+
+% Module simulation with cooing inside the module
+
+input_configs = {
+    'Pouch_74Ah',  'system_para_BTMS_sim', 'liquid_inside_Pouch'; ...
+    };
+
+% Provide the requested system specification
+run input_and_parameters\04_system_specifications\system_specifcations_Pouch_inside.m;
 
 
 

@@ -11,15 +11,12 @@
 % to be considered set it as '0' in case of minimums or 'inf' in case of
 % maximums.
 
-
 %% Some basic definitions
 
 SysSpec.name = mfilename;         % Get config name from filename (for better overview)
 
-
-SysSpec.num_higher_p_mod = 2;     % Not only look for one parallel cell connection for each module, but also consider up t0 p+n --> More e*pe-distributions will be found.
+SysSpec.num_higher_p_mod = 0;     % Not only look for one parallel cell connection for each module, but also consider up t0 p+n --> More e*pe-distributions will be found.
 SysSpec.num_higher_p_sys = 0;     % Not only look for one parallel module connection for each system, but also consider up t0 p+n --> More e*pe-distributions will be found. Note that this will potentially massivey overdimension your system!
-
 
 
 %% Electric battery system parameters
@@ -36,9 +33,9 @@ SysSpec.s_mod_max   = inf;      % Hard limit for serially connected cells per Mo
 % System Level
 
 SysSpec.I_sys_max   = 375;      % Maximum continuous current the system must withstand in A
-SysSpec.U_sys_nom   = 450/3;    % Nominal voltage of battery system
+SysSpec.U_sys_nom   = 450/9;      % Nominal voltage of battery system
 SysSpec.C_sys_min   = 190;      % Minimum system capacity in Ah
-SysSpec.E_sys_min   = 85/3;     % Minimum system energy in kWh
+SysSpec.E_sys_min   = 85/9;       % Minimum system energy in kWh
 
 
 
@@ -49,7 +46,7 @@ SysSpec.E_sys_min   = 85/3;     % Minimum system energy in kWh
 SysSpec.m_mod_max       = 75;       % Maximum module mass in kg
 
 SysSpec.dim_x_mod_max   = 1.1;      % Maximum module dimension in x-direction in m
-SysSpec.dim_y_mod_max   = 1.7;      % Maximum module dimension in y-direction in m
+SysSpec.dim_y_mod_max   = 1.2;      % Maximum module dimension in y-direction in m
 SysSpec.dim_z_mod_max   = 0.2;      % Maximum module dimension in z-direction in m
 
 SysSpec.mod_min_e       = 0;        % Minimum layers e of cells in module (z-dir)
@@ -59,13 +56,12 @@ SysSpec.mod_max_e       = inf;      % Maximum layers e of cells in module (z-dir
 
 SysSpec.m_sys_max       = 1500;     % Maximum module mass in kg
 
-SysSpec.dim_x_sys_max   = 3.0/3;    % Maximum system dimension in x-direction in m
+SysSpec.dim_x_sys_max   = 3.0/9;    % Maximum system dimension in x-direction in m
 SysSpec.dim_y_sys_max   = 1.7;      % Maximum system dimension in y-direction in m
 SysSpec.dim_z_sys_max   = 0.2;      % Maximum system dimension in z-direction in m
 
 SysSpec.sys_min_e       = 0;        % Minimum layers e of cells in module (z-dir)
 SysSpec.sys_max_e       = inf;      % Maximum layers e of cells in module (z-dir)
-
 
 
 %% Correction and safety factors

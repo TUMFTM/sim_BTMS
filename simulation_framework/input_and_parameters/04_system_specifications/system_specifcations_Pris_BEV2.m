@@ -44,21 +44,25 @@ SysSpec.E_sys_min   = 85/3;     % Minimum system energy in kWh
 
 % Module level
 
-SysSpec.m_mod_max   = 150;          % Maximum module mass in kg
+SysSpec.m_mod_max       = 150;      % Maximum module mass in kg
 
 SysSpec.dim_x_mod_max   = 1.1;      % Maximum module dimension in x-direction in m
 SysSpec.dim_y_mod_max   = 1.7/3;    % Maximum module dimension in y-direction in m
 SysSpec.dim_z_mod_max   = 0.2;      % Maximum module dimension in z-direction in m
 
+SysSpec.mod_min_e       = 0;        % Minimum layers e of cells in module (z-dir)
+SysSpec.mod_max_e       = inf;      % Maximum layers e of cells in module (z-dir)
 
 % System level
 
-SysSpec.m_sys_max   = 1500;         % Maximum module mass in kg
+SysSpec.m_sys_max       = 1500;     % Maximum module mass in kg
 
 SysSpec.dim_x_sys_max   = 3.0;      % Maximum system dimension in x-direction in m
 SysSpec.dim_y_sys_max   = 1.7/3;    % Maximum system dimension in y-direction in m
 SysSpec.dim_z_sys_max   = 0.2;      % Maximum system dimension in z-direction in m
 
+SysSpec.sys_min_e       = 0;        % Minimum layers e of cells in module (z-dir)
+SysSpec.sys_max_e       = inf;      % Maximum layers e of cells in module (z-dir)
 
 
 %% Correction and safety factors
