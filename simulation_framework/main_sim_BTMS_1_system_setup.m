@@ -131,7 +131,7 @@ for ii = 1:size(input_configs, 1)
     % parallel so that p = e*pe. Those are arranged next to each other so
     % the total number of cells in the module is n = e*pe*s.
     
-    epe_mod = epe_distribution(p_min_mod, SysSpec.num_higher_p_mod);   
+    epe_mod = epe_distribution(p_min_mod, SysSpec.num_higher_p_mod, SysSpec.mod_min_e, SysSpec.mod_max_e);   
    
     % Load BTMS data
         
@@ -307,7 +307,7 @@ for ii = 1:size(configs_2_mod_passed, 2)
     % parallel so that p = e*pe. Those are arranged next to each other so
     % the total number of modules in the battery system is n = e*pe*s.
     
-    epe_sys = epe_distribution(p_sys_raw, config.SysSpec.num_higher_p_sys);   
+    epe_sys = epe_distribution(p_sys_raw, config.SysSpec.num_higher_p_sys, config.SysSpec.sys_min_e, config.SysSpec.sys_max_e);   
     
     % More parallel connections may be considered for a given configuration
     % --> Interrate through all p's
